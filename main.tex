@@ -61,6 +61,14 @@
 \end{screen}
 
 \begin{rem}
+  $\phi = 0$の時,$(\phi, \phi) = 0$となる. なぜなら線形性から$(0, 0) = 0(0, 0) = 0$よりわかる.
+\end{rem}
+
+\begin{rem}
+  $(\phi - \psi, \phi - \psi) = (\psi - \phi, \psi - \phi)$
+\end{rem}
+
+\begin{rem}
   内積の条件のうち正定値性以外を満たすものを半正定値な内積と呼ばれる.また線形性を左側を用いて定式化する場合も多い.数学の文献では特に多いらしいが,物理ではこの流儀が多い.
 \end{rem}
 
@@ -75,14 +83,31 @@ $f, g \in C[a, b]$に対し,
 とすると,内積の公理を満たす.
 
 \section{ヒルベルト空間}
-内積からノルムが定義され,これは距離が定義されるため,内積空間は距離空間になる.
-
+内積からノルムを$||x||:= \sqrt{(x, x)}$で定義する.
+そこから$x, y$に対し,$d(x, y) = ||x -y||$とすることで,距離が定義されるため,内積空間は距離空間になる.
+\begin{lem}
+ノルムは距離を定める.ただし、距離とは以下を満たすものである.
+\begin{itemize}
+    \item $d(x,y) = d(y,x)$
+    \item $d(x,x) = 0$
+    \item $d(x, y) + d(y, z) \ge d(x,z)$
+\end{itemize}
+\end{lem}
+\begin{proof}
+$(x-y, x- y) = (y-x, y-x)$を示す.それは内積の線形性から$(x-y, x-y)= (-1)(y-x, x-y) = (-1)^2(y-x, y-x)$よりわかる.
+次に$d(x, x) =0$は自明.最後の三角不等式は
+\begin{align*}
+(x-y+y-z, x-y+y-z) &= (x-y, x-y) +2Re(x-y, y-z) + (y-z, y-z) \\
+                  & \le (x-y, x-y) +2 ||x-y||\cdot ||y-z|| + (y-z)(y-z)  \\
+                  & = (||x-y|| + ||y-z||)^2
+\end{align*}
+\end{proof}
 
 \begin{lem}
- 内積は連続である.つまり,$\phi_n \to \phi$の時,
+ 内積は連続である.つまり,$\phi_n \to \phi, \psi_m \to \psi$の時,
  \begin{align*}
   ||\phi_n|| \to ||\phi||  \\
-   (\phi_n, \psi_n) \to (\phi, \psi)
+   (\phi_n, \psi_m) \to (\phi, \psi)
  \end{align*}
 \end{lem}
 \begin{proof}
@@ -141,15 +166,15 @@ $inf$の定義より,$\phi_n \in M$で$d(\phi, \phi_n) \to d(\phi, M)$となる�
 なぜなら
 \begin{align*}
 ||\phi_n - \phi_m||^2 & = ||\phi_n - \phi + \phi - \phi_m ||^2 \\
-                      & = 2||\phi_n - \phi||^2 + 2 ||\phi - \phi_m||^2 + ||\phi_n - \phi_m - 2\phi||^2 \\
-                      & \le 2||\phi_n - \phi||^2 + 2 ||\phi - \phi_m||^2 + 4d^2  \to 0
+                      & = 2||\phi_n - \phi||^2 + 2 ||\phi - \phi_m||^2 - ||\phi_n - \phi_m - 2\phi||^2 \\
+                      & \le 2||\phi_n - \phi||^2 + 2 ||\phi - \phi_m||^2 - 4d^2  \to 0
 \end{align*}
 よって$M$の完備性から$\phi_n$の収束先を$\phi_M$とすると,内積の連続性から$||\phi - \phi_n|| \to ||\phi - \phi_M ||$となる.
 これから確かに$\phi_M$はinfと一致する.
 一意性は
 \begin{align*}
-||\phi_M - \phi_{M'}||^2 & = ||\phi_n - \phi_M + \phi_{M'} - \phi_n ||^2 \\
-                         & \le 2||\phi_n - \phi_M||^2 + 2 ||\phi_{M'} - \phi_n||^2 + 4d^2 = 0
+||\phi_M - \phi_{M'}||^2 & = ||\phi - \phi_M + \phi_{M'} - \phi ||^2 \\
+                         & \le 2||\phi - \phi_M||^2 + 2 ||\phi_{M'} - \phi||^2 - 4d^2 = 0
 \end{align*}
 よりわかる.
 \end{proof}
@@ -159,9 +184,9 @@ $M$を$\mathcal{H}$の閉部分空間とする.
 この時任意の$x \in \mathcal{H}$に対し,$x = \phi + \psi$と表せる($\phi \in M, \psi \in M^{\perp}$)
 \end{thm}
 \begin{proof}
-$x - x_M \in M^{\perp}$を示す.
+$x_M$を$x$に対し上の定理を満たす元とする.$x - x_M \in M^{\perp}$を示す.
 $(x - x_M, y) = 0$を言えればよい.
-$t \in \mathbb{R}$を用い,$||x - x_M - ty||^2 = ||x - x_M||^2 + t\mathrm{Re}(x - x_M, y) + t^2 ||y||^2$となり,
+$t \in \mathbb{R}$を用い,$||x - x_M - ty||^2 = ||x - x_M||^2 + 2t\mathrm{Re}(x - x_M, y) + t^2 ||y||^2$となり,
 距離の最小性から$t\mathrm{Re}(x - x_M, y) + t^2 ||y||^2$は$t$によらず常に正となる.よって,$\mathrm{Re}(x - x_M, y) = 0$となり$it$を取ると同様に$\mathrm{Im}(x - x_M, y) = 0$となる.
 よって,0となる.一意性は$y,y' \in M, z, z' \in M^{\perp}$に対し,$y + z = y' + z'$となったすると,$y - y' = z' -z \in M \cap M^{\perp} = \{0\}$となるので,一意性が言える.
 \end{proof}
@@ -184,6 +209,7 @@ $T$は線形であるといい,$T$を$\mathcal{H}$から$\mathcal{K}$の線形�
   ||T|| = \mathrm{sup}_{||\psi|| = 1} \frac{||T\psi||}{||\psi||}
 \end{equation*}
 を作用素ノルムという.
+また,有界線形作用素全体を$B(\mathcal{H}, \mathcal{K})$と表す.
 \end{dfn}
 \end{screen}
 
@@ -197,7 +223,7 @@ $T$は線形であるといい,$T$を$\mathcal{H}$から$\mathcal{K}$の線形�
 \end{epl}
 なので,
 \begin{equation*}
-(M_ff)(x) = F(x)f(x)
+M_Ff(x) = F(x)f(x)
 \end{equation*}
 によって,$L^2(\mathbb{R}^d) \to L^2(\mathbb{R}^d)$が定義され,これは有界線形作用素となる.
 これを\textbf{掛け算作用素}と呼ぶ.
@@ -212,13 +238,18 @@ $T: \mathcal{H} \to \mathcal{K}$を有界線形作用素とする.この時,
 \begin{proof}
   \begin{itemize}
     \item  $T, \phi$に分離し,不等式評価すれば良い.
-    \item 定義域が全域なので,コーシー列は収束先を持ち,前の結果を使うことで内積が0となり続けるので$\phi \in \ker T$となり,完備性がわかる.
+\begin{align*}
+    ||T\phi - T\phi_n|| \le ||T|| ||\phi - \phi_n|| \to 0 \\
+\end{align*}
+    \item 
+    $(\phi_n)$を$\mathrm{Ker}T$のコーシー列とする.よってその極限$\phi \in \mathcal{H} =D(T)$となる.これが$\phi \in \mathrm{Ker}T$となることを示す.
+    $T\phi_n = 0$より,連続性から$T\phi = 0$となるので,言えた.
   \end{itemize}
 \end{proof}
 
 \section{有界線形汎関数とリースの表現定理}
 $\mathcal{H}$を$K$上のヒルベルト空間とする.$\mathcal{H}$の部分集合から$K$への写像を\textbf{汎関数}という.
-$\mathcal{H}$全体を定義域とする.有界線形汎関数の全てからなる集合を$H^*$と表し,双対空間という.
+$\mathcal{H}$全体を定義域とする.有界線形汎関数の全てからなる集合を$H^*$と表し,\textbf{双対空間}という.
 
 \begin{thm}[リースの表現定理]
 $\forall F \in \mathcal{H}^*$に対し, $\phi_F \in \mathcal{H}$で以下を満たすものが唯一存在する.
@@ -227,12 +258,28 @@ $\forall F \in \mathcal{H}^*$に対し, $\phi_F \in \mathcal{H}$で以下を満�
   \item $||\phi_F|| = ||F||$
 \end{itemize}
 \end{thm}
-リアルタイム証明をするぞ.
-方針としては,上の内積の条件を満たす $\phi_F$を具体的に構成する.
+$\mathrm{Ker}F = D(T)$の時は$\phi_F= 0$を取ればよい.
+なので,$\mathrm{Ker}F \neq D(T)$の時を考え、この時に具体的に条件を満たす$\phi_F$を構成する.
+今$\mathrm{Ker} F^{\perp} \neq {0}$ではない.なので,
 \begin{itemize}
-  \item $KerF^{\perp}$の元$\phi_0$を取り,$\phi$に対し,$\psi = \phi - F(\phi)F(\phi_0)\phi_0 \in \mathrm{Ker}F$を取ることで条件を満たすものが構成できる
-  $\phi_F = F(\phi_0)^* \phi_0 / || \phi_0||^2$
- \item 一意性, ノルムは不等式両辺評価. $\le $はこーしシュワルツ,$ \ge $はsupの定義.
+  \item 存在を構成することで示す. $KerF^{\perp}$の元$\phi_0$を取る. $\phi \in D(T)$に対し,$\psi = \phi - F(\phi)F(\phi_0)^{-1}\phi_0 $を取る.
+  これは
+  \begin{align*}
+  F(\psi) & =  F(\phi) - F(F(\phi) F(\phi_0)^{-1}\phi_0)  \\
+          & =  F(\phi) - F(\phi)F(\phi_0)^{-1}F(\phi_0)  = 0 
+  \end{align*}
+  より $\psi \in \mathrm{Ker}F$となる.これより$(\phi_0, \psi) =0$となる.よって
+  ここで,$\phi_F = F(\phi_0)^* \phi_0 / || \phi_0||^2$とする.$\phi = \psi + F(\phi)F(\phi_0)^{-1} \phi_0$となり,
+  \begin{align*}
+  (\phi_F, \phi) & = (\phi_F, \psi + F(\phi)F(\phi_0)^{-1} \phi_0)  \\
+                 & = F(\phi_0) / || \phi_0||^2 (\phi_0,  F(\phi)F(\phi_0)^{-1} \phi_0) \\
+                 & =  F(\phi)
+  \end{align*}
+ \item 一意性は上の条件を満たす$\phi_F, \phi_F'$に対し$(\phi_F - \phi_F' , \psi) = 0$よりわかる.
+ \item  ノルムは不等式両辺評価.
+ $F(\psi) = (\phi_F, \psi) \le ||\phi_F|| ||\psi||$より,$\frac{||F(\phi)||}{\||\phi||} \le ||\phi_F||$となる.
+ また
+ $\ge$は$F(\phi_F) = ||\phi_F||^2$より,$||F|| \ge \frac{||F(\phi_F)||}{||\phi_F||} = ||\phi_F||$
 \end{itemize}
 
 \section{ユニタリ作用素とヒルベルト空間の同型}
@@ -313,6 +360,9 @@ $E: \mathcal{B} \to P(\mathcal{H})$とする.
 となる時,$E$を\textbf{単位の分割}という.
 \end{dfn}
 \end{screen}
+
+\chapter{量子力学の数学的原理}
+
 
 \part{作用素環}
 

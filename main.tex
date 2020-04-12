@@ -1,14 +1,337 @@
-\documentclass{article}
-\usepackage[utf8]{inputenc}
 
-\title{quauntum_statistics}
-\author{bamboo_river }
-\date{February 2020}
+%===============
+%一行目に必ず必要
+%文章の形式を定義
+%===============
+\documentclass[uplatex]{jsbook}
+%===============
+%パッケージの定義、必要か不明
+%===============
+%この下4つを加えることで、mathbbが機能した
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+%可換図式用パッケージ
+\usepackage{amscd}
+\usepackage[all]{xy}
+\usepackage{tikz-cd}
+%リンク用パッケージ
+\usepackage[dvipdfmx]{hyperref}
+%複数行コメント
+%\usepackage{comment}
+
+\usepackage{my-default}
+%タイトルデータ
+\title{Quauntum StatisTics}
+\author{ari}
+\date{\today}
+
+
+%===============
+%定理環境の設定
+%セクション毎
+%===============
+
 
 \begin{document}
 
+% タイトルを出力
 \maketitle
+% 目次の表示
+\tableofcontents
+\part{ヒルベルト空間と量子力学}
+\chapter{ヒルベルト空間}
+ヒルベルト空間と関数解析の基本的な内容を学び実際に量子力学の内容を触れる.
+\section{ベクトル空間}
+自明なので省略
 
-\section{Introduction}
+\section{内積空間}
+
+\begin{screen}
+\begin{dfn}
+ $\mathcal{H}$を$K$-vector spaceとする.以下の性質を持つものを内積と呼ぶ.
+ \begin{itemize}
+   \item (正値性) すべての$\phi \in \mathcal{H}$に対し,$(\phi, \phi) \ge 0$
+   \item (正定値性) $(\phi, \phi) = 0$の時$\phi = 0$
+   \item (線形性) $a,b \in K$で$\psi_a, \psi_b \in \mathcal{H}$に対し,$(\phi, a \psi_a + b\psi_b) = a(\phi, \psi_a) + b(\phi, \psi_b)$
+   \item (対称性) $(\phi, \psi) = (\psi, \phi)^*$
+ \end{itemize}
+\end{dfn}
+\end{screen}
+
+\begin{rem}
+  内積の条件のうち正定値性以外を満たすものを半正定値な内積と呼ばれる.また線形性を左側を用いて定式化する場合も多い.数学の文献では特に多いらしいが,物理ではこの流儀が多い.
+\end{rem}
+
+
+\begin{epl}
+$[a, b]$上の複素数値連続関数全体$C[a,b]$はベクトル空間であり,
+$f, g \in C[a, b]$に対し,
+\begin{equation*}
+ (f, g) :=  \int_a^b f^*(x) \cdot g(x) dx
+\end{equation*}
+\end{epl}
+とすると,内積の公理を満たす.
+
+\section{ヒルベルト空間}
+内積からノルムが定義され,これは距離が定義されるため,内積空間は距離空間になる.
+
+
+\begin{lem}
+ 内積は連続である.つまり,$\phi_n \to \phi$の時,
+ \begin{align*}
+  ||\phi_n|| \to ||\phi||  \\
+   (\phi_n, \psi_n) \to (\phi, \psi)
+ \end{align*}
+\end{lem}
+\begin{proof}
+三角不等式から,$||\phi|| - ||\phi_n|| \le ||\phi_n - \phi|| \to 0$である.
+また,
+\begin{align*}
+|(\phi, \psi) - (\phi_n, \psi_m)| & = |(\phi - \phi_n, \psi) + (\phi_n, \psi - \psi_m)| \\
+                                  & \le ||\phi - \phi_n||||\psi|| + ||\phi_n||||\psi - \psi_m|| \to 0
+\end{align*}
+よりいえる.
+\end{proof}
+
+\begin{screen}
+\begin{dfn}
+ 完備な内積空間をヒルベルト空間という.
+\end{dfn}
+\end{screen}
+つまり,内積が定めるノルムについてBanachになる空間である. 一般にBanach空間は内積が定まらないが,実は中線定理を仮定すれば内積が定まる.
+
+\begin{screen}
+\begin{dfn}
+  $M$を$\mathcal{H}$の部分空間とする.この時,
+  \begin{equation*}
+  M^{\perp}:= \{x \in \mathcal{H} \mid \forall y \in M, (y, x) = 0\}
+  \end{equation*}
+\end{dfn}
+を直交補空間という.
+\end{screen}
+
+\begin{lem}
+ $M$を$\mathcal{H}$を部分空間とする.この時$M^{\perp}$は閉部分空間となる.
+\end{lem}
+\begin{proof}
+  $x_n \in M^{\perp}$をコーシー列とする.この時$x_n \to x$となる$x \in H$が存在する.
+  また,$\forall y \in M$に対し,$(x_n, y) =0$となり,内積の連続性から$(x_n, y) \to (x, y) =0$となる.
+  よって,$x \in M^{\perp}$となるので,閉である.
+\end{proof}
+
+正射影を定義する.
+$\mathcal{H}$をヒルベルト空間,$M$をその閉部分空間とする.この時
+\begin{equation*}
+d(x, M) = \mathrm{inf}_{y\in M}d(x,y)
+\end{equation*}
+とする.ただし,$d(x,y) = ||x -y||$である.
+
+\begin{prop}
+ $M$を$\mathcal{H}$の閉部分空間とする.この時,ある$\phi_M \in M$がただ一つ存在し,
+ \begin{equation*}
+  d(\phi, M) = d(\phi, \phi_M)
+ \end{equation*}
+となる.
+\end{prop}
+\begin{proof}
+$inf$の定義より,$\phi_n \in M$で$d(\phi, \phi_n) \to d(\phi, M)$となるものが取れる.
+この時$\phi_n$は$M$上のコーシー列になる.
+なぜなら
+\begin{align*}
+||\phi_n - \phi_m||^2 & = ||\phi_n - \phi + \phi - \phi_m ||^2 \\
+                      & = 2||\phi_n - \phi||^2 + 2 ||\phi - \phi_m||^2 + ||\phi_n - \phi_m - 2\phi||^2 \\
+                      & \le 2||\phi_n - \phi||^2 + 2 ||\phi - \phi_m||^2 + 4d^2  \to 0
+\end{align*}
+よって$M$の完備性から$\phi_n$の収束先を$\phi_M$とすると,内積の連続性から$||\phi - \phi_n|| \to ||\phi - \phi_M ||$となる.
+これから確かに$\phi_M$はinfと一致する.
+一意性は
+\begin{align*}
+||\phi_M - \phi_{M'}||^2 & = ||\phi_n - \phi_M + \phi_{M'} - \phi_n ||^2 \\
+                         & \le 2||\phi_n - \phi_M||^2 + 2 ||\phi_{M'} - \phi_n||^2 + 4d^2 = 0
+\end{align*}
+よりわかる.
+\end{proof}
+
+\begin{thm}[正射影定理]
+$M$を$\mathcal{H}$の閉部分空間とする.
+この時任意の$x \in \mathcal{H}$に対し,$x = \phi + \psi$と表せる($\phi \in M, \psi \in M^{\perp}$)
+\end{thm}
+\begin{proof}
+$x - x_M \in M^{\perp}$を示す.
+$(x - x_M, y) = 0$を言えればよい.
+$t \in \mathbb{R}$を用い,$||x - x_M - ty||^2 = ||x - x_M||^2 + t\mathrm{Re}(x - x_M, y) + t^2 ||y||^2$となり,
+距離の最小性から$t\mathrm{Re}(x - x_M, y) + t^2 ||y||^2$は$t$によらず常に正となる.よって,$\mathrm{Re}(x - x_M, y) = 0$となり$it$を取ると同様に$\mathrm{Im}(x - x_M, y) = 0$となる.
+よって,0となる.一意性は$y,y' \in M, z, z' \in M^{\perp}$に対し,$y + z = y' + z'$となったすると,$y - y' = z' -z \in M \cap M^{\perp} = \{0\}$となるので,一意性が言える.
+\end{proof}
+これは$\psi, \phi$ともに射影となる.$||x -  \phi + m'||^2 =  ||\psi||^2 + ||m'||^2$より$\psi$で最小となる.
+
+\chapter{ヒルベルト空間上の線形作用素}
+\section{線形作用素}
+$\mathcal{H}, \mathcal{K}$をヒルベルト空間とし,$D \subset \mathcal{H}$で$T:D \to \mathcal{K}$が線形写像となる時
+$T$は線形であるといい,$T$を$\mathcal{H}$から$\mathcal{K}$の線形作用素という.$D$を定義域といい$D(T)$で表し,像を$R(T)$で表す.
+
+\section{有界線形作用素}
+\begin{screen}
+\begin{dfn}
+ $T: \mathcal{H} \to \mathcal{K}$を線形作用素とする.$C > 0$が存在し,
+ \begin{equation*}
+  ||T\psi || \le C || \psi ||
+ \end{equation*}
+となる時,有界線形作用素という.この時,
+\begin{equation*}
+  ||T|| = \mathrm{sup}_{||\psi|| = 1} \frac{||T\psi||}{||\psi||}
+\end{equation*}
+を作用素ノルムという.
+\end{dfn}
+\end{screen}
+
+\begin{epl}
+複素数値ボレル可測関数$F: \mathbb{R}^d \to \mathbb{C}$に対し,$\lvert F(x) \rvert \le C| \mathrm{a.e.} x \in \mathbb{R}^d$が成り立つ時,\textbf{本質的に有界}という.
+このような$C$の下限を$|F(x)|$の\textbf{本質的上限}といい,$||F||_{\infty}$で表す.
+この時 $f \in L^2(\mathbb{R}^d)$に対し,
+\begin{equation*}
+ \int |F(x)f(x)|^2 dx \le ||F||^2_{\infty} \int |f(x)|^2 dx < \infty
+\end{equation*}
+\end{epl}
+なので,
+\begin{equation*}
+(M_ff)(x) = F(x)f(x)
+\end{equation*}
+によって,$L^2(\mathbb{R}^d) \to L^2(\mathbb{R}^d)$が定義され,これは有界線形作用素となる.
+これを\textbf{掛け算作用素}と呼ぶ.
+
+\begin{prop}
+$T: \mathcal{H} \to \mathcal{K}$を有界線形作用素とする.この時,
+\begin{itemize}
+  \item $\phi_n \in D(T)$に対し$\phi_n \to \phi$ならば,$T\phi_n \to T\phi$となる
+  \item $D(T) = \mathcal{H}$の時,$\ker T$は閉部分空間である.
+\end{itemize}
+\end{prop}
+\begin{proof}
+  \begin{itemize}
+    \item  $T, \phi$に分離し,不等式評価すれば良い.
+    \item 定義域が全域なので,コーシー列は収束先を持ち,前の結果を使うことで内積が0となり続けるので$\phi \in \ker T$となり,完備性がわかる.
+  \end{itemize}
+\end{proof}
+
+\section{有界線形汎関数とリースの表現定理}
+$\mathcal{H}$を$K$上のヒルベルト空間とする.$\mathcal{H}$の部分集合から$K$への写像を\textbf{汎関数}という.
+$\mathcal{H}$全体を定義域とする.有界線形汎関数の全てからなる集合を$H^*$と表し,双対空間という.
+
+\begin{thm}[リースの表現定理]
+$\forall F \in \mathcal{H}^*$に対し, $\phi_F \in \mathcal{H}$で以下を満たすものが唯一存在する.
+\begin{itemize}
+  \item $F(\psi) = (\phi_F, \psi)$
+  \item $||\phi_F|| = ||F||$
+\end{itemize}
+\end{thm}
+リアルタイム証明をするぞ.
+方針としては,上の内積の条件を満たす $\phi_F$を具体的に構成する.
+\begin{itemize}
+  \item $KerF^{\perp}$の元$\phi_0$を取り,$\phi$に対し,$\psi = \phi - F(\phi)F(\phi_0)\phi_0 \in \mathrm{Ker}F$を取ることで条件を満たすものが構成できる
+  $\phi_F = F(\phi_0)^* \phi_0 / || \phi_0||^2$
+ \item 一意性, ノルムは不等式両辺評価. $\le $はこーしシュワルツ,$ \ge $はsupの定義.
+\end{itemize}
+
+\section{ユニタリ作用素とヒルベルト空間の同型}
+
+\begin{screen}
+\begin{dfn}
+  $U: \mathcal{H} \to \mathcal{K}$が\textbf{ユニタリ作用素}とは
+\begin{itemize}
+  \item $D(U) = \mathcal{H}$
+  \item $R(U) = \mathcal{K}$
+  \item $U$は内積を保存する.つまり
+  $(U\phi, U\psi)_{\mathcal{K}} = (\phi, \psi)_{\mathcal{H}}$
+\end{itemize}
+\end{dfn}
+\end{screen}
+この時$||U\phi|| = ||\phi||$となるので,作用素ノルム$||U|| = 1$となる.
+これはヒルベルト空間の内積を含めた構造を保つので,ユニタリ作用素で移り合うものを同型という.
+
+また,正射影による分解は内積も含め分解する.このように高々加算個の閉部分空間の直和で表せる時,それを$\textbf{直交分解}$という.
+
+
+\begin{screen}
+\begin{dfn}
+ 位相空間$X$が可分とは可算な稠密部分集合が存在することである
+\end{dfn}
+\end{screen}
+
+\chapter{作用素解析とスペクトル定理}
+\section{正射影作用素}
+正射影定理から$\phi \mapsto \phi_M$が定まる.
+この対応を$M$上への正射影作用素という.
+これは正射影定理から
+$\phi + \psi \mapsto \phi_M + \psi_M$となるので線形であることがわかる.
+また$||\psi||^2 \ge ||\phi_M||^2$から有界であることがわかる.
+
+\begin{epl}
+  $L^2(\mathbb{R})$に対し,$L^2_+(\mathbb{R})$に対する正射影を求める.単純に分割するのみ.
+\end{epl}
+
+$M$に対する正射影作用素をもとに正射影作用素を定義する.
+\begin{screen}
+\begin{dfn}
+ $P^2 = P$,$P^* = P$が成り立つ作用素を正射影作用素という.
+\end{dfn}
+\end{screen}
+
+\begin{prop}
+$P$が正射影作用素の時
+ \begin{itemize}
+   \item $\phi \in R(P)$に対し,$P\phi = \phi$
+   \item $P$は非負
+   \item $||P|| \le 1$.特に$||P|| \neq 0$の時,1となる.
+   \item $R(P)$は閉部分空間となる.
+   \item $P \neq 0, I$の時,$\sigma(P) = \{0, 1\}$
+ \end{itemize}
+\end{prop}
+気頑張って証明するか.
+
+\begin{prop}
+$M, N$を$\mathcal{H}$の閉部分空間とする.この時,
+$P_M P_N = 0$と$M \perp N$は同値
+\end{prop}
+$x \in N$の時$P_N(x) = x$となり,$P_M(x) = 0$より$x \in M^{\perp}$となることがわかる.
+逆に$M, N$が直交している時,$M \subset N^{\perp}$となる.よって,$P_MP_N = 0$となる.
+
+\section{単位の分解と作用素値汎関数}
+\begin{screen}
+\begin{dfn}
+$\mathcal{B}^d$を$\mathbb{R}^d$のボレル集合全体とする.$P(\mathcal{H})$で正射影作用素全体とし,
+$E: \mathcal{B} \to P(\mathcal{H})$とする.
+\begin{itemize}
+  \item $E(\emptyset) = 0, E(\mathbb{R}^d) = I$
+  \item $B = \cup_{n=1}^{\infty} B_n,B_n \cap B_m = \emptyset (n \neq m) $の時
+  \begin{equation*}
+  E(B) = s- \lim \sum_{n=1}^N E(B_n)
+  \end{equation*}
+\end{itemize}
+となる時,$E$を\textbf{単位の分割}という.
+\end{dfn}
+\end{screen}
+
+\part{作用素環}
+
+\part{量子統計}
+あるPDFをベースに数学的にまとめる.
+
+\begin{thm}
+$\mathcal{Y} \subset \mathcal{X}$を$C^*$-subalgebraとする.この時,$\sigma_{\mathcal{X}}(B) = \sigma_{\mathcal{Y}}(B)$となる.
+以降で,$\sigma(B)$となる.
+\end{thm}
+\begin{proof}
+$B \in \mathcal{Y}$が$\mathcal{X}$上可逆なら,$\mathcal{Y}$上可逆であることを示せばよい.
+$B^*=B$の時,$\sigma_X(A) \subset [-||A||, ||A||]$なので,
+$\lambda_0 = 2i||B|| \in \rho(B)$となる.
+この時,$R(B, \lambda_0) = \lambda_0^{-1}(1 - \frac{B}{\lambda_0})^{-1}$となり,
+$||\frac{B}{\lambda_0}|| < 1$よりこれの逆元は$\frac{B}{\lambda_0}$の無限和でかける.
+よって完備性から$\mathcal{Y}$の元となる.
+
+なんかここの証明がわからん...
+\end{proof}
 
 \end{document}

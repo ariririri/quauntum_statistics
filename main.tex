@@ -1,4 +1,3 @@
-
 %===============
 %一行目に必ず必要
 %文章の形式を定義
@@ -23,7 +22,7 @@
 
 \usepackage{my-default}
 %タイトルデータ
-\title{Quauntum StatisTics}
+\title{Quauntum Statistics}
 \author{ari}
 \date{\today}
 
@@ -241,7 +240,7 @@ $T: \mathcal{H} \to \mathcal{K}$を有界線形作用素とする.この時,
 \begin{align*}
     ||T\phi - T\phi_n|| \le ||T|| ||\phi - \phi_n|| \to 0 \\
 \end{align*}
-    \item 
+    \item
     $(\phi_n)$を$\mathrm{Ker}T$のコーシー列とする.よってその極限$\phi \in \mathcal{H} =D(T)$となる.これが$\phi \in \mathrm{Ker}T$となることを示す.
     $T\phi_n = 0$より,連続性から$T\phi = 0$となるので,言えた.
   \end{itemize}
@@ -266,7 +265,7 @@ $\mathrm{Ker}F = D(T)$の時は$\phi_F= 0$を取ればよい.
   これは
   \begin{align*}
   F(\psi) & =  F(\phi) - F(F(\phi) F(\phi_0)^{-1}\phi_0)  \\
-          & =  F(\phi) - F(\phi)F(\phi_0)^{-1}F(\phi_0)  = 0 
+          & =  F(\phi) - F(\phi)F(\phi_0)^{-1}F(\phi_0)  = 0
   \end{align*}
   より $\psi \in \mathrm{Ker}F$となる.これより$(\phi_0, \psi) =0$となる.よって
   ここで,$\phi_F = F(\phi_0)^* \phi_0 / || \phi_0||^2$とする.$\phi = \psi + F(\phi)F(\phi_0)^{-1} \phi_0$となり,
@@ -296,18 +295,354 @@ $\mathrm{Ker}F = D(T)$の時は$\phi_F= 0$を取ればよい.
 \end{dfn}
 \end{screen}
 この時$||U\phi|| = ||\phi||$となるので,作用素ノルム$||U|| = 1$となる.
-これはヒルベルト空間の内積を含めた構造を保つので,ユニタリ作用素で移り合うものを同型という.
+この時,この写像$U$は全単射である.全射は定義からわかり,単射は$U\phi =0$と$||U\phi||=0$が同値なことからわかる.
+ヒルベルト空間の内積を含めた構造を保つので,ユニタリ作用素で移り合うものを\textbf{同型}という.
+\begin{rem}
+ ヒルベルト空間として同型という意味である.
+\end{rem}
+また,一般に距離空間$X,Y$の間の連続写像$f:X \to Y$が
+$d(x_1, x_2) = d(f(x_1), f(x_2))$となる場合,\textbf{等長変換}という.
+ユニタリ作用素は$d(a, b) = ||a - b|| = ||Ua -Ub|| = d(Ua, Ub)$となるので,等長変換である.
 
-また,正射影による分解は内積も含め分解する.このように高々加算個の閉部分空間の直和で表せる時,それを$\textbf{直交分解}$という.
+\begin{lem}
+正射影による分解は内積も含め分解する.つまり,ヒルベルト空間として$H \sim M \oplus M^{\perp}$
+\end{lem}
+\begin{proof}
+ベクトル空間として$\mathcal{H} = M \oplus M^{\perp}$であったが,これがヒルベルト空間としての同型となることを示す.
+具体的には,$U: \mathcal{H} \to M \oplus M ^{\perp}, \phi \mapsto (\phi_M, \phi_{M ^{\perp}})$が同型となることを示す.
+$(\phi_M + \phi_{M ^{\perp}}, \psi_M + \psi_{M  ^{\perp}}) = (\phi_M, \psi_M) + (\phi_M^{\perp}, \psi_M^{\perp})$となる.
+これは$(\phi_M, \phi_{M ^{\perp}}) \cdot (\psi_M, \psi_{M^{\perp}})$と一致する.
+\end{proof}
 
+このように高々加算個の閉部分ヒルベルト空間の直和で表せる時,それを$\textbf{直交分解}$という.
 
 \begin{screen}
 \begin{dfn}
- 位相空間$X$が可分とは可算な稠密部分集合が存在することである
+ 位相空間$X$が\textbf{可分}とは可算な稠密部分集合が存在することである
 \end{dfn}
 \end{screen}
 
+\begin{epl}
+  $\mathbb{R}$は可分である.
+\end{epl}
+
+\subsubsection{ヒルベルト空間の正規直交基底}
+この章だけは別の本を参照して示す.
+理由は2つある.
+一つはヒルベルト空間と量子力学では可分の定義が一般的なものと異なっており、条件が弱いこと
+\cite{K} 黒田では、証明に名に選択公理を用いていおり、鮮やかであることある.
+
+\begin{thm}[グラムシュミットの正規直交化法]
+ $\{\phi_k\}$を$\mathcal{H}$の要素の集合で,任意の$n$に対して$\phi_1, \ldots \phi_n$が線形独立であるとする.
+ この時$\mathcal{H}$の正規直交系$\{\psi_k\}$で,任意の$n$に対し,$\langle \phi_1 \ldots \phi_n \rangle = \langle \psi_1, \ldots, \psi_n\rangle$となるものが存在する.
+\end{thm}
+\begin{proof}
+$M_i := \langle \phi_1, \ldots, \phi_i\rangle$とする.$i =0$の時は$M_i = \{0\}$とする,
+$\psi_{i+1}$を$M_{i}^{\perp}$への射影$\phi_{i+1}$への射影のノルムが$1$となるものとする.
+つまり$\psi_{i+1}=\frac{P_{M_i^{\perp}}(\phi_{i+1})}{||P_{M_i^{\perp}}(\phi_{i+1})||}$.
+この時$\psi$の生成するベクトル空間が$\phi$の生成するベクトル空間と一致することを示したい.
+それは$\psi_{i+1} \neq 0$かつ$M_i$の直交補空間の元なので$\psi_{i+1} \notin M_{i}$と
+$\phi_{i+1} - ||P_{M_i ^{\perp}}\phi_{i+1}||\psi_{i+1} \in M_{i}$とより,$\psi_{i+1} \in M_{i+1}$となるので,
+$M_{i+1}= \langle\psi_1, \ldots, \psi_{i+1}\rangle$となる.$\phi_{i+1}$は$M_i$の直交補空間の元なので,$M_i$の全ての元と直交し,
+$||\phi_i|| =1$となるので,証明された.
+\end{proof}
+
+\begin{thm}
+ 可分なヒルベルト空間$\mathcal{H}$は高々加算個の正規直交基底を持つ.
+\end{thm}
+\begin{proof}
+可分であることから$\mathcal{H}$の稠密な可算集合$\{\phi_k\}$が存在する.
+これから,以下の操作をすることで線形独立な集合を作る.$M_{i}:= \langle\phi_1, \ldots, \phi_i\rangle$とする.
+$\phi_i \in M_{i-1}$なら省き、そうでないなら残す.
+これを繰り返すことにより,残った$\phi_i$たちは一次独立であることがわかる.
+ここからグラムシュミットの正規直交化法により,生成するベクトル空間の次元に一致する正規直交な元の組が取れる.
+これら全体の生成する空間の直交補空間は閉であり,元々の元が稠密なので,閉部分空間の次元は0になる.
+なぜなら、直交補空間の元$\alpha$に対し,元々の空間上で収束する列$\{\alpha_n\}$が取れ,
+$||\alpha_n - \alpha||^2 = ||\alpha||^2 + ||\alpha_n||^2 \to 0$となるので,$||\alpha|| = 0$となる.
+直交補空間が0であることから全体に一致することがわかる.
+\end{proof}
+
+これはZornの補題を用いても示せる.
+
+\begin{thm}[Zornの補題]
+空でない順序集合$\Lambda$に対し,$\Lambda$の任意の全順序集合が上界を持つなら,
+$\Lambda$には極大元が存在する.
+\end{thm}
+
+\begin{epl}
+ 例えば$[a,b]$は全順序集合であるが,上界として$b$が取れ,これはを極大元になる.
+\end{epl}
+
+\begin{epl}
+ 例えば$\mathbb{R}$全体は全順序集合であるが,上界を持たず、実際,極大元を存在しない.
+\end{epl}
+
+またこの定理は選択公理と同値であることが知られる.
+この定理を用いることでも証明が出来,さらにこれを使うことで可分とは限らないヒルベルト空間にも,完全正規直交系が存在することがわかる.
+
+証明の概略は以下の通り.正規直交系全体を包含を用いて順序を定めるとこれはZornの補題の仮定を満たす.
+全順序集合に対し,その和集合が上界となる.
+上界となるには和集合が正規直交することを示す必要がある.
+それは$\phi_i, \phi_j$に対しそれらを含む２つの順序集合が存在し,全順序性からどちらかに含まれていることがわかり,その中で$\phi_i, \phi_j$の正規直交性がわかる.
+よって,Zornの補題から,正規直交系全体に極大元が存在することがわかる.
+もしこれが全体を生成できないとすると生成する空間の直交補空間の大きさ1の元を取ることにより,より大きな正規直交系が取れるため、極大性に矛盾する.
+よって言えた.
+
+\begin{screen}
+\begin{dfn}
+可分な無限次元ヒルベルト空間$\mathcal{H}$に対し,その完全正規直交基底$\phi_i$を固定する.
+この時$\phi \in \mathcal{H}$は$\phi = \sum a_i \phi_i$とかけ,$a_i$を\textbf{フーリエ級数}という.
+\end{dfn}
+\end{screen}
+
+\section{有界線形作用素}
+\subsection{有界線形作用素の定義域の拡大}
+
+\begin{thm}
+$T:\mathcal{H} \to \mathcal{K}$が有界線形作用素で$D(T)$が稠密とする.
+この時,定義域が全体に一致し,$D(T)$上元の関数と一致するものが存在する.
+\end{thm}
+\begin{proof}
+$\phi_n \in D(T) \to \phi$という列に対し,$T\phi_n$はコーシー列になる.
+なぜなら,$T$が有界線形作用素なので,$||T\phi_i - T \phi_j|| \le ||T|| \cdot || \phi_i - \phi_j||$とできるためである.
+よって$\phi \mapsto T\phi$とすれば,これは線形になり,元々と一致することもある.(本来はwell-defined性も必要だが,コーシー列２つを交互に並べればコーシー列なのでわかる)
+\end{proof}
+
+このことから$D(T)$は閉と思ってよい.そうすると射影作用素を考えることで,直交補空間では全て0とする延長が構成できる.
+よって,有界線形作用素の定義域は全域だと思って良い.
+また$\mathcal{H}$から$\mathcal{K}$への有界作用素全体を$\mathcal{B}(\mathcal{H}, \mathcal{K})$と表す.
+定義域と値域が一致する場合は$\mathcal{B}(\mathcal{H})$とかく.
+
+$\mathcal{B}(\mathcal{H}, \mathcal{K})$には,ノルムにより距離を定義できる.ノルムによる距離に対し.
+
+\begin{lem}
+$\mathcal{B} (\mathcal{H}, \mathcal{K})$は完備である.
+\end{lem}
+\begin{proof}
+作用素のコーシー列$T_n$に対し,$T$を$\phi \mapsto \lim T_n\phi$で定める.$T_n - T_m$は有界線形作用素なので
+$||T_n \phi - T_m \phi|| \le ||T_n - T_m|| \cdot ||\phi||$となり$0$に収束する.
+$\mathcal{K}$の完備性が存在し,上の写像は定義できる.これが線形であることはすぐわかる.
+有界であることは$||T\phi|| \le ||(T - T_n)\phi||+||T_n\phi|| \le  \epsilon + ||T_n|| \cdot || \phi||$よりわかる.
+また,$||T - T_n|| = \sup_{||\phi||=1} \frac{||(T - T_n)\phi||}{||\phi||} \to 0$となるので$T$は$T_n$の収束先であることがわかる.
+\end{proof}
+
+\subsection{有界作用素の無限級数とノイマン級数}
+$S_N := \sum_{n=1}^{N} T_n$がノルムの意味である$S \in \mathcal{B}(\mathcal{H}, \mathcal{K})$に収束する時
+$\sum_{n=1}^{\infty}T_n$で$S$と表す.
+
+\subsection{ヒルベルト空間の有界作用素の空間の位相}
+$(\phi, \psi_n) \to (\phi, \psi)$となる時, $\psi_n$は$\psi$に\textbf{弱収束}するという.
+ヒルベルト空間として$\mathcal{B}(\mathcal{H}, \mathcal{K})$とすると,
+任意のコーシー列$\{T_n\}$に対し,$T_n\phi$が$\mathcal{K}$上弱収束する場合,$T_n$を弱収束という.
+またこれが強収束(通常の意味での収束)する場合,強収束するという.
+ノルムで収束する時はノルム収束という.
+
+ノルム収束するならば強収束し,強収束するなら,弱収束する.
+
+\section{非有界作用素}
+
+有界でない作用素を非有界作用素という.
+ここでは非有界作用素の例を2つあげる
+\begin{epl}
+関数$F$が本質的に有界でないとき,$F$による掛け算作用素は非有界となる.
+\end{epl}
+
+\begin{epl}
+$C_0 ^{\infty}(\mathbb{R}^{d})$上の偏微分作用素は非有界である.
+\end{epl}
+
+\section{作用素の拡大と共役作用素}
+\subsection{作用素の拡大}
+作用素の拡大は定義域の拡大になっているものを指す.
+$T, S$を$\mathcal{H}$から$\mathcal{K}$に対する線形作用素とする.
+$D(T) \subset D(S)$で$S|_{D(T)}= T$の時,$S$を$T$の\textbf{拡大}という.
+
+\subsection{共役作用素}
+一般にBanach空間$\mathcal{X},\mathcal{Y}$に対し,$\phi \in \mathcal{B}(\mathcal{X}, \mathcal{Y})$に対し,
+$\mathcal{B}(\mathcal{Y}^{*},\mathcal{X}^{*})$上に$\phi^* \in B(\mathcal{Y}^*, \mathcal{X}^*)$が定義される.
+具体的には$\phi ^{*}(f_y) = f_y \circ\phi$という線形作用素が定義される.
+これが有界なのは$\phi$の有界性から従う.
+\begin{align*}
+    \frac{||\phi^*(f_y)||}{||f_y||} &= \frac{ ||f_y \circ \phi ||}{||f_y||}\\
+                                &\le \frac{||f_y|| \cdot ||\phi||}{||f_y||}\\
+                                &\le  ||\phi||
+\end{align*}
+また,有界でなくとも定義域が稠密であれば同様に定義できるが,有界性が成り立つとは限らない.
+
+改めて,有界線形作用素$T: \mathcal{H} \to \mathcal{K}$に対し,リースの表現定理から
+$\phi \in \mathcal{K}$に対し,$F_{\phi} \in \mathcal{K}^*$が存在し,
+$F_{\phi}(T(\psi)) = (\phi,T\psi)_K$となる.
+$F_{\phi} \circ T   \in \mathcal{H}^*$を定めるので,
+$(F_{\phi} \circ T )(\psi)= (\eta, \psi)$となる元$\eta$がただ一つ存在する.
+よって$(\phi, T\psi) = (\eta, \psi)$となるものが唯一存在する.
+これから$T^*:\mathcal{K} \to \mathcal{H}$を$\phi \mapsto \eta$で定める.
+ここではヒルベルト空間に限定し,非有界な場合も含めてこれで定義する.
+
+つまり,
+\begin{align*}
+    D(T^*):= \{ \phi \in K \mid \forall \psi \in D(T), \exists \eta\in \mathcal{H} s.t. (\phi, T\psi)_{\mathcal{K}} = (\eta, \psi)_{\mathcal{H}}  \}
+\end{align*}
+とし,$T^*: \mathcal{K} \to \mathcal{H}, \phi \mapsto \eta$とする.
+このような写像は一意に定まる.
+なぜなら,$(\eta, \psi) = (\eta', \psi)$とすると,$(\eta - \eta' , \psi) = 0$となり,これが任意の$\psi$に対して成り立つので特に$\psi = \eta- \eta'$を取ると,
+$||\eta - \eta'|| = 0$となり,$\eta = \eta'$となる.
+
+この時,以下が成り立つ.
+\begin{prop}
+ $T \in B(\mathcal{H},\mathcal{K})$に対し,$T^* \in B(\mathcal{K}, \mathcal{H})$であり,$T^{**}=T$で,
+ $||T^*|| = ||T||$となる.
+\end{prop}
+\begin{proof}
+  実際に$\phi \in \mathcal{K}$に対し,$F_{\phi}:\mathcal{H} \to \mathbb{K}$を$F_{\phi}(\psi) = (\phi, T \psi)$で定める.
+  これは$(\phi, T \psi) \le ||\phi| \cdot ||T \psi|| \le ||T|| \cdot ||\psi||$より,$\psi$のとり方によらず,
+  $\frac{||(\phi, T\psi)||}{\psi}$は制限されるので,有界線形作用素になる.
+  よってリースの表現定理より$(\phi , T\psi) = F_{\phi}(\psi) = (\eta, \psi)$となる$\eta \in \mathcal{H}$がただ一つ定まる.
+  これから
+  \begin{align*}
+   ||T^* \phi || & = ||\eta|| &  \mbox{ definition of }T* \\
+                & = ||F_{\phi}|| & \mbox{リースの表現定理} \\
+                & = \mathrm{sup} ||(\phi, T \psi)||  & \mbox{definition of }F_{\psi}\\
+                & \le ||\phi|| \cdot ||T \psi|| & \mbox{コーシーシュワルツ} \\
+                & \le ||\phi|| \cdot ||T|| \cdot ||\psi||  & \mbox{コーシーシュワルツ} \\
+  \end{align*}
+  より,有界性が言え,さらに$||T^*|| \le ||T||$が言える.
+  $T$を$T^*$と取り替えることにより,
+  $(\phi, T\psi) = (T^* \phi, \psi) = (\phi, T^{**}\psi)$となり,一意性から$T^{**} = T$となり,
+  また図式を同様にすることで$||T^*||  \le ||T|| = ||T^{**}||$より,一致が言える
+\end{proof}
+
+\begin{epl}
+$L^2(\mathbb{C})$に対し,掛け算作用素$M_F$は$f(x) \mapsto F(x) f(x)$となるものであった.
+掛け算作用素$M_F$の共役作用素は$(f, M_Fg)  = (M_F^*f, g)$となるものであり,
+\begin{equation*}
+ (f, M_Fg)  = \int f^*(x)F(x)g(x)dx = \int (f(x) F^*(x))^* g(x) dx = (M_{F^*}f, g)
+\end{equation*}
+となるので,上の一意性から,証明できる.
+\end{epl}
+
+\section{閉作用素と可閉作用素}
+\begin{screen}
+\begin{dfn}
+ $\phi: \mathcal{H} \to \mathcal{K}$がclosedとは
+ $D(T)$の任意の$\phi_n$が$\phi_n \to \phi \in \mathcal{H}, T\phi_n \to \psi$となる時,$\phi \in D(T)$で$\phi = T\psi$となること.
+\end{dfn}
+\end{screen}
+
+今ヒルベルト空間では
+$||u||_X + ||Tu||_{\mathcal{Y}}$で定めるノルムで$D(T)$は完備になる.
+今この条件を満たすコーシー列$u_n$を取ると,$Tu_n$もコーシー列となるので,$\mathcal{Y}$上この極限となる元が存在する.
+この時,閉作用素の性質から$u \in D(T)$でその極限となるものが取れる.よってこれは確かに完備になる.
+また,逆にこのグラフノルムの完備性からでも閉作用素は定義できる.
+
+\begin{thm}
+  \begin{itemize}
+    \item $T \in B(\mathcal{X}, \mathcal{Y})$ならば閉作用素
+    \item $T$は閉作用素であり,$D(T)$が$\mathcal{X}$上稠密かつ$T$が有界なら$D(T) = \mathcal{X}$となり,特に$T \in B(\mathcal{X}, \mathcal{Y})$となる.
+  \end{itemize}
+\end{thm}
+\begin{proof}
+  1つ目は自明.$u_n \in X$がコーシー列なら$T(u_n - u_m)$はコーシー列になり完備性から収束先$v$が存在するが,収束先の一意性から$Tu = v$となる.
+  2つ目は稠密性から$u \in \mathcal{X}$に対し,そこに収束するコーシー列$u_n \in D(T)$が取れる.定義域上での有界性から$Tu_n$は収束するので,閉作用素の定義から$u \in D(T)$となる.
+
+\end{proof}
+
+
+
+閉グラフ定理は述べておく.
+\begin{thm}
+ $\mathcal{X}, \mathcal{Y}$をBanach spaceとする.$T: \mathcal{X} \to \mathcal{Y}$が閉作用素で$D(T)= \mathcal{X}$なら$T \in B(\mathcal{X}, \mathcal{Y})$となる.
+\end{thm}
+
+\section{レゾルヴェントとスペクトル}
+\subsection{作用素の固有値、固有ベクトル、固有空間}
+関数空間の場合固有値を固有関数という.
+
+
+\begin{epl}
+$C^1_P[0, 2\pi]$上の作用素$p$を
+$pf(x) = - i \frac{df(x)}{dx}$で定めるとフーリエ展開は固有関数展開になる
+具体的には
+$\phi_n(x)= \frac{1}{\sqrt{2\pi}} e^{in x}$とすると
+$p \phi_n(x) = n \phi_n(x)$となる.
+なので,フーリエ変換は一つの作用素の固有関数達による正規直交基底となる.
+\end{epl}
+
+固有値を持たない作用素も存在する.
+
+\begin{epl}
+$L^2(\mathbb{R})$に対し,$F(x) = x$をかける掛け算作用素を$M_x$とする.
+この時,$M_xf = \lambda f$とすると,$(x - \lambda)(f(x)) = 0$となるので,
+$f(x) = 0, \mathrm{a.e.}x.$となる.
+\end{epl}
+
+\subsection{レゾルヴェント集合とスペクトル}
+
+有限次元のベクトル空間の場合$\mathrm{Ker}(f - \lambda) \neq 0$と,$f - \lambda$が全単射でないことは同値だったが,無限次元の場合はそうなるとは限らない.
+そこで
+$T$を$\mathcal{H}$上の閉作用素とする.作用素$T - \lambda$が全単射であり,その逆作用素
+\begin{equation*}
+    R_{\lambda}(T) = (T - \lambda)^{-1}
+\end{equation*}
+が有界であるような$\lambda$全体を$T$の\textbf{レゾルヴェント集合}といい,$\rho(T)$で表す.
+
+\begin{prop}
+ $\lambda \in \rho(T)$は$S \in B(\mathcal{H}, \mathcal{H})$で$R(S) \subset D(T)$を満たし
+ \begin{equation*}
+   (T - \lambda) S = I, S(T - \lambda) \subset  I
+ \end{equation*}
+が成立することである. この時$S = R_{\lambda}(T)$となる.
+\end{prop}
+\begin{proof}
+$\lambda \in \rho(T)$ならレゾルヴェントの定義により,$S = R_{\lambda}(T)$を取れば条件を満たす.
+逆は,$(T - \lambda )S = I$より全射であり,$S(T - \lambda) \subset I$よりのKernelは0になるので言える.
+\end{proof}
+
+$\sigma(T): = \mathbb{C} \setminus \rho(T)$を$T$の\textbf{スペクトル}という.
+また,$T$の固有値全体を$\rho_p(T)$とかき、\textbf{点スペクトル}という.
+有限次元の場合は点スペクトルとスペクトルは一致する.
+o
+
 \chapter{作用素解析とスペクトル定理}
+
+.
+
+\begin{prop}
+ $\mathcal{B} (\mathcal{H}, \mathcal{K})$の点列$\{T_n\}$に対し,$\sum_{n=1}^{\infty}||T_n|| \le \infty$となる時,
+ $\sum T_n$は収束する.
+\end{prop}
+\begin{proof}
+$||S_n - S_m|| =|| \sum T_k|| \le \sum ||T_k|| \to 0$となるので
+コーシー列となることがわかる.
+\end{proof}
+
+\begin{thm}
+$||T|| < 1$の時,$(1+T)$は全単射であり,
+\begin{equation*}
+ (1+T)^{-1}  = \sum_{n=0}^{\infty} (-1)^{n}T ^{n}
+\end{equation*}
+が成立する.
+\end{thm}
+\begin{proof}
+ $S:= \sum_{n=0}^{\infty} (-1)^{n}T ^{n}$とすると,
+$(1+T)S_n \to 1$となり$(1+T)$の連続性から$(1+T)S = 1$となる
+逆も同様なので$S(1+T)=1$となるので,全単射となる.
+\end{proof}
+
+\subsection{レゾルヴェントの基本的な性質}
+\begin{thm}
+ $T$をヒルベルト空間$\mathcal{H}$上の閉作用素とし,$\rho(T) \neq 0$とする.
+ \begin{itemize}
+   \item $\lambda_0 \in \rho(T)$に対し,$|\lambda - \lambda_0|< ||R_{\lambda_0}(T) ||^{-1}$となる$\lambda$は$\lambda \in \rho(T)$となる.
+   また,
+   \begin{equation*}
+   R_{\lambda}(T) = \sum_{n=0} ^{\infty} R_{\lambda_0}(T)^{n+1}(\lambda - \lambda_0)
+   \end{equation*}
+   となる.特に$\rho(T)$はopen setとなる.
+   \item $D(T)$はdenseとする.この時$\lambda \in \rho(T)$ならば$\lambda^* \in \rho(T^*)$であって,$R_{\lambda}(T)^* = R_{\lambda^*}(T^*)$となる.
+ \end{itemize}
+\end{thm}
+
+
 \section{正射影作用素}
 正射影定理から$\phi \mapsto \phi_M$が定まる.
 この対応を$M$上への正射影作用素という.
@@ -349,7 +684,7 @@ $x \in N$の時$P_N(x) = x$となり,$P_M(x) = 0$より$x \in M^{\perp}$とな�
 \begin{screen}
 \begin{dfn}
 $\mathcal{B}^d$を$\mathbb{R}^d$のボレル集合全体とする.$P(\mathcal{H})$で正射影作用素全体とし,
-$E: \mathcal{B} \to P(\mathcal{H})$とする.
+$E: \mathcal{B}^{d} \to P(\mathcal{H})$とする.
 \begin{itemize}
   \item $E(\emptyset) = 0, E(\mathbb{R}^d) = I$
   \item $B = \cup_{n=1}^{\infty} B_n,B_n \cap B_m = \emptyset (n \neq m) $の時
@@ -358,8 +693,33 @@ $E: \mathcal{B} \to P(\mathcal{H})$とする.
   \end{equation*}
 \end{itemize}
 となる時,$E$を\textbf{単位の分割}という.
+この収束は強収束である.
 \end{dfn}
 \end{screen}
+
+ここからすぐわかることとして以下がある.
+\begin{lem}
+  任意の$B_1,B_2 \in \mathcal{B}^{d}$に対し,$E(B_1 \cap B_2) = E(B_1)E(B_2)$となる.
+\end{lem}
+\begin{proof}
+  $C_1:= B_1 \setminus B_1 \cap B_2, C_2 := B_2 \setminus B_1 \cap B_2$とする.
+  $B_{12}:= B_1 \cap B_2$とする
+  この時
+  \begin{align*}
+   E(B_1)E(B_2)& = E(C_1 \cup B_{12})E(C_2 \cup B_{12}) \\
+                           & = (E(C_1) +E(B_{12})(E(C_2) + E(B_{12})) \\
+                           & = E(C_1)E(C_2) + E(C_1)E(B_{12}) + E(B_{12})E(C_2) + E(B_{12})\\
+\end{align*}
+となる.よって $B_{12} = \emptyset$の時に$E(B_1)E(B_2) = 0$さえ示せば十分である.
+この時$E(B_1) +E(B_2) = E(B_1 \cup B_2)$となる.よって両辺を二乗すると,
+$E(B_1) + E(B_1)E(B_2) + E(B_2)E(B_1) + E(B_2) = E(B_1 \cup B_2)$となる.
+これから,元の式と合わせると,$E(B_1)E(B_2) + E(B_2)E(B_1) = 0$となる.
+これ使い,一つの項が消えるこをを示したい.よって,＋ものが一致するように適切に元をかける.
+具体的には,左と右から$E(B_1)$を書けると$2 E(B_1)E(B_2)E(B_1) = 0$となる.
+よって,$E(B_1)E(B_2)E(B_1) = 0$となるため,$E(B_1)E(B_2) + E(B_2)E(B_1) = 0$に左から$E(B_1)$をかけると,
+$E(B_1)E(B_2) +E(B_1)E(B_2)E(B_1) = 0$となるので,$E(B_1)E(B_2) = 0$となる.
+\end{proof}
+
 
 \chapter{量子力学の数学的原理}
 
@@ -384,4 +744,7 @@ $||\frac{B}{\lambda_0}|| < 1$よりこれの逆元は$\frac{B}{\lambda_0}$の無
 なんかここの証明がわからん...
 \end{proof}
 
+\begin{thebibliography}{99}
+\bibitem{K}  関数解析(黒田)
+\end{thebibliography}
 \end{document}

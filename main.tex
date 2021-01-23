@@ -1,4 +1,4 @@
-%===============
+%==============
 %一行目に必ず必要
 %文章の形式を定義
 %===============
@@ -203,7 +203,7 @@ $T$は線形であるといい,$T$を$\mathcal{H}$から$\mathcal{K}$の線形�
  \begin{equation*}
   ||T\psi || \le C || \psi ||
  \end{equation*}
-となる時,有界線形作用素という.この時,
+となる時,\textbf{有界線形作用素}という.この時,
 \begin{equation*}
   ||T|| = \mathrm{sup}_{||\psi|| = 1} \frac{||T\psi||}{||\psi||}
 \end{equation*}
@@ -250,18 +250,20 @@ $T: \mathcal{H} \to \mathcal{K}$を有界線形作用素とする.この時,
 $\mathcal{H}$を$K$上のヒルベルト空間とする.$\mathcal{H}$の部分集合から$K$への写像を\textbf{汎関数}という.
 $\mathcal{H}$全体を定義域とする.有界線形汎関数の全てからなる集合を$H^*$と表し,\textbf{双対空間}という.
 
+
 \begin{thm}[リースの表現定理]
 $\forall F \in \mathcal{H}^*$に対し, $\phi_F \in \mathcal{H}$で以下を満たすものが唯一存在する.
 \begin{itemize}
-  \item $F(\psi) = (\phi_F, \psi)$
+  \item $F(\phi) = (\phi_F, \phi)$
   \item $||\phi_F|| = ||F||$
 \end{itemize}
 \end{thm}
-$\mathrm{Ker}F = D(T)$の時は$\phi_F= 0$を取ればよい.
-なので,$\mathrm{Ker}F \neq D(T)$の時を考え、この時に具体的に条件を満たす$\phi_F$を構成する.
-今$\mathrm{Ker} F^{\perp} \neq {0}$ではない.なので,
+$\mathrm{Ker}F = \mathcal{H}$の時は$||F|| = 0$となるので,$\phi_F= 0$を取ればよい.
+なので,$\mathrm{Ker}F \neq \mathcal{H}$の時に具体的に条件を満たす$\phi_F$を構成する.
 \begin{itemize}
-  \item 存在を構成することで示す. $KerF^{\perp}$の元$\phi_0$を取る. $\phi \in D(T)$に対し,$\psi = \phi - F(\phi)F(\phi_0)^{-1}\phi_0 $を取る.
+  \item 存在を構成することで示す.
+  今$\mathrm{Ker} F^{\perp} \neq {0}$ではない.よって
+  $\mathrm{Ker}F^{\perp}$の元$\phi_0$を取る. $\phi \in \mathcal{H}$に対し,$\psi = \phi - F(\phi)F(\phi_0)^{-1}\phi_0 $を取る.
   これは
   \begin{align*}
   F(\psi) & =  F(\phi) - F(F(\phi) F(\phi_0)^{-1}\phi_0)  \\
@@ -528,11 +530,11 @@ $L^2(\mathbb{C})$に対し,掛け算作用素$M_F$は$f(x) \mapsto F(x) f(x)$と
 \end{dfn}
 \end{screen}
 
-今ヒルベルト空間では
+今ヒルベルト空間でも(実際はバナッハ空間でも)
 $||u||_X + ||Tu||_{\mathcal{Y}}$で定めるノルムで$D(T)$は完備になる.
-今この条件を満たすコーシー列$u_n$を取ると,$Tu_n$もコーシー列となるので,$\mathcal{Y}$上この極限となる元が存在する.
-この時,閉作用素の性質から$u \in D(T)$でその極限となるものが取れる.よってこれは確かに完備になる.
-また,逆にこのグラフノルムの完備性からでも閉作用素は定義できる.
+今このノルムでのコーシー列$u_n$を取ると,$Tu_n$も$\mathcal{Y}$のノルムでコーシー列となるので,$\mathcal{Y}$上この極限となる元が存在する.
+この時,$u_n$の収束先$u$は閉作用素の定義から$u \in D(T)$となる.よってこれは確かに完備になる.
+このノルムをグラフノルムという.ヒルベルト空間やバナッハ空間の場合,逆にこのグラフノルムの完備性からでも閉作用素は定義できる.
 
 \begin{thm}
   \begin{itemize}
@@ -541,17 +543,47 @@ $||u||_X + ||Tu||_{\mathcal{Y}}$で定めるノルムで$D(T)$は完備になる
   \end{itemize}
 \end{thm}
 \begin{proof}
-  1つ目は自明.$u_n \in X$がコーシー列なら$T(u_n - u_m)$はコーシー列になり完備性から収束先$v$が存在するが,収束先の一意性から$Tu = v$となる.
+  1つ目の証明$u_n \in X$がコーシー列なら$T(u_n )$はコーシー列になり完備性から収束先$v$が存在するが,収束先の一意性から$Tu = v$となる.
   2つ目は稠密性から$u \in \mathcal{X}$に対し,そこに収束するコーシー列$u_n \in D(T)$が取れる.定義域上での有界性から$Tu_n$は収束するので,閉作用素の定義から$u \in D(T)$となる.
-
 \end{proof}
 
+閉作用素は
+\begin{equation*}
+ \Gamma(T) = \{(u, Tu) \subset \mathcal{X} \times \mathcal{Y}\}
+\end{equation*}
+が閉でも定義できる.
 
+\begin{thm}
+  閉作用素$T$が1対1ならば$T^{-1}$も閉作用素である.
+\end{thm}
+$f:\mathcal{X}\times \mathcal{Y} \to \mathcal{Y} \times \mathcal{X}$は同相であり,それで
+グラフ$\Gamma(T^{-1})$と$\Gamma(T)$は移りあうので、お互い閉集合となり,閉作用素であることがわかる.
 
+\subsection{three basic principles}
+
+\begin{thm}[一様有界性原理]
+$\mathcal{X}$をバナッハ空間,$\mathcal{Y}$をノルム空間とし,$T_{\lambda} \in B(\mathcal{X}, \mathcal{Y})$とする.
+$u \in \mathcal{X}$に対し,
+\begin{equation*}
+ sup ||T_{\lambda}u || < \infty
+\end{equation*}
+なら$\mathrm{sup}|| T_{\lambda}|| < \infty$となる.
+\end{thm}
+
+\begin{thm}
+ $T \in B(\mathcal{X}, \mathcal{Y})$に対し,$R(T)= \mathcal{Y}$なら,
+$T$は開写像になる.
+\end{thm}
 閉グラフ定理は述べておく.
 \begin{thm}
  $\mathcal{X}, \mathcal{Y}$をBanach spaceとする.$T: \mathcal{X} \to \mathcal{Y}$が閉作用素で$D(T)= \mathcal{X}$なら$T \in B(\mathcal{X}, \mathcal{Y})$となる.
 \end{thm}
+
+\begin{cor}
+ $T$が$\mathcal{X}$から$\mathcal{Y}$への閉作用素とする.$T$が一対一かつ$R(T) = \mathcal{Y}$ならば$T^{-1} \in B(\mathcal{Y}, \mathcal{X})$となる.
+\end{cor}
+$T$が一対一対応なので,$T^{-1}$は閉作用素である.そこで$T^{-1}$の定義域は$R(T)=\mathcal{Y}$となるので,閉グラフ原理より有界線形作用素となる.
+
 
 \section{レゾルヴェントとスペクトル}
 \subsection{作用素の固有値、固有ベクトル、固有空間}
@@ -581,9 +613,9 @@ $f(x) = 0, \mathrm{a.e.}x.$となる.
 そこで
 $T$を$\mathcal{H}$上の閉作用素とする.作用素$T - \lambda$が全単射であり,その逆作用素
 \begin{equation*}
-    R_{\lambda}(T) = (T - \lambda)^{-1}
+  R_{\lambda}(T) = (T - \lambda)^{-1}
 \end{equation*}
-が有界であるような$\lambda$全体を$T$の\textbf{レゾルヴェント集合}といい,$\rho(T)$で表す.
+  が有界であるような$\lambda$全体を$T$の\textbf{レゾルヴェント集合}といい,$\rho(T)$で表す.
 
 \begin{prop}
  $\lambda \in \rho(T)$は$S \in B(\mathcal{H}, \mathcal{H})$で$R(S) \subset D(T)$を満たし
@@ -600,11 +632,6 @@ $\lambda \in \rho(T)$ならレゾルヴェントの定義により,$S = R_{\lamb
 $\sigma(T): = \mathbb{C} \setminus \rho(T)$を$T$の\textbf{スペクトル}という.
 また,$T$の固有値全体を$\rho_p(T)$とかき、\textbf{点スペクトル}という.
 有限次元の場合は点スペクトルとスペクトルは一致する.
-o
-
-\chapter{作用素解析とスペクトル定理}
-
-.
 
 \begin{prop}
  $\mathcal{B} (\mathcal{H}, \mathcal{K})$の点列$\{T_n\}$に対し,$\sum_{n=1}^{\infty}||T_n|| \le \infty$となる時,
@@ -616,17 +643,35 @@ $||S_n - S_m|| =|| \sum T_k|| \le \sum ||T_k|| \to 0$となるので
 \end{proof}
 
 \begin{thm}
-$||T|| < 1$の時,$(1+T)$は全単射であり,
+$T \in B(\mathcal{X})$で$||T|| < 1$の時,$(1+T)$は全単射であり,
 \begin{equation*}
  (1+T)^{-1}  = \sum_{n=0}^{\infty} (-1)^{n}T ^{n}
 \end{equation*}
-が成立する.
+が成立し,$(1+T)^{-1}$は有界線形作用素になる.
 \end{thm}
 \begin{proof}
- $S:= \sum_{n=0}^{\infty} (-1)^{n}T ^{n}$とすると,
-$(1+T)S_n \to 1$となり$(1+T)$の連続性から$(1+T)S = 1$となる
+ $S:= \sum_{n=0}^{\infty} (-1)^{n}T ^{n}$とすると,絶対収束し,及びノルムが$(1- ||T||)^{-1}$以下になる.
+ なぜなら
+ \begin{align*}
+ ||\sum_{n=0}^{\infty} (-1)^{n}T ^{n}|| \le \sum ||T||^n  \le (1 - ||T||)^{-1}
+ \end{align*}
+$S_n$は$S$の第n次成分までの和とする.
+$(1+T)$の連続性(有界性)から
+\begin{equation*}
+    \lim (1+T)(S_n) = (1+T)(\lim S_n) = (1+T)S
+\end{equation*}
+となり$(1+T)S_n = (1+(-1)^{n}T^{n+1})$となるので$(1+T)S = 1$となる
 逆も同様なので$S(1+T)=1$となるので,全単射となる.
 \end{proof}
+
+\begin{rem}
+ 作用素が有界線形作用であることと連続であることは同値.
+ 有界なら収束する時にいくらでも小さくできるので連続.
+ 逆に連続なら背理法でノルムが有界でなくなるような点列を取ると収束先が複数になり連続性に矛盾.
+ 例えば十分大きい$n$に対し,$u_n$を$||u_n|| = 1$で$|Tu_n| \ge N$となるようなものが取れる.
+ この時に$v_n = u_n / ||Tu_n||$とすると,$|v_n | \to 0$になる.一方で$|Tv_n|| = 1$となる.
+ よって$\lim Tv_n \neq 0$となる。一方で$v_n \to 0$なので$Tv_n$は連続性から0になる。よって矛盾する.
+\end{rem}
 
 \subsection{レゾルヴェントの基本的な性質}
 \begin{thm}
@@ -635,13 +680,110 @@ $(1+T)S_n \to 1$となり$(1+T)$の連続性から$(1+T)S = 1$となる
    \item $\lambda_0 \in \rho(T)$に対し,$|\lambda - \lambda_0|< ||R_{\lambda_0}(T) ||^{-1}$となる$\lambda$は$\lambda \in \rho(T)$となる.
    また,
    \begin{equation*}
-   R_{\lambda}(T) = \sum_{n=0} ^{\infty} R_{\lambda_0}(T)^{n+1}(\lambda - \lambda_0)
+   R_{\lambda}(T) = \sum_{n=0} ^{\infty} R_{\lambda_0}(T)^{n+1}(\lambda - \lambda_0)^n
    \end{equation*}
    となる.特に$\rho(T)$はopen setとなる.
    \item $D(T)$はdenseとする.この時$\lambda \in \rho(T)$ならば$\lambda^* \in \rho(T^*)$であって,$R_{\lambda}(T)^* = R_{\lambda^*}(T^*)$となる.
  \end{itemize}
 \end{thm}
+\begin{proof}
+  \begin{enumerate}
+    \item
+$K_{\lambda} = (\lambda - \lambda_0)R_{\lambda_0}$とする
+\begin{align*}
+(1- K_{\lambda})(T - \lambda_0) & =  (1- \frac{\lambda - \lambda_0}{T - \lambda_0)} ) (T -\lambda_0) \\
+    & = T - \lambda_0 - (\lambda - \lambda_0)  \\
+    & = T - \lambda
+\end{align*}
+とできる.
+$K_{\lambda}$は有界線形作用素の定数倍なので有界線形作用素であり$||K_{\lambda}|| = |\lambda - \lambda_0|\cdot ||R_{\lambda_0}||$となる.
+よって$|\lambda - \lambda_0| < ||R_{\lambda_0}(T)||^{-1}$ならば,$||K_{\lambda}|| < 1$であり,これから$1-K_{\lambda}$は全単射であり,
+$(1-K_{\lambda})^{-1} \in B(\mathcal{H})$となる.
+これより,$T-\lambda$は全単射であることがわかり,さらに$(T-\lambda)^{-1} = (T - \lambda_0)^{-1}(1-K_{\lambda})^{-1}$となるので,有界線形作用素であることもわかる.
+よって$\lambda \in \rho(T)$である.
+また,
+\begin{equation*}
+  (1-K_{\lambda})^{-1}= \sum K^n_{\lambda} = \sum_{n=0}^{\infty} R_{\lambda_0}(T)^n(\lambda - \lambda_0)^n
+\end{equation*}
+となるので、そのまま代入すれば良い.
 
+\item  共役作用素の存在は(0が必ず入るので)言える.
+まず,$T-\lambda$の定義域は稠密になり,$R_{\lambda}(T)$が有界線形作用素で定義域が全域なので,
+\begin{equation*}
+I = I ^* \supset (R_{\lambda}(T)(T - \lambda))^* =  R_{\lambda}(T)^* (T-\lambda)^* = R_{\lambda}(T)^* (T^* - \lambda^*)
+\end{equation*}
+となる.同様にすることで,$\lambda^* \in \rho(T^*)$となり$R_{\lambda}(T)^* = R_{\lambda^*}(T^*)$となる.
+\end{enumerate}
+\end{proof}
+
+ところで
+
+\begin{align*}
+R_{\lambda}(T) ((T -\mu) - (T - \lambda))R_{\mu}(T) & = R_{\lambda}(T)(1 - (T-\lambda)R_{\mu}(T)) \\
+                                                    & = R_{\lambda}(T) - R_{\mu}(T)
+\end{align*}
+となる.
+この式から
+$R_{\lambda}(T)R_{\mu}(T) = R_{\mu}(T)R_{\lambda}(T)$がなりたつ.
+
+\begin{thm}
+ $T$をヒルベルト空間 $\mathcal{H}$上の閉作用素とする.
+ \begin{enumerate}
+   \item $\sigma(T)$は$\mathbb{C}$の閉集合
+   \item $T$が有界ならば,$\sigma(T) \subset \{\lambda \in \mathbb{C} \mid |\lambda| \le ||T||\}$
+   さらに$\sigma(T) \neq 0$
+   \item $U$をユニタリ作用素とすると
+   \begin{align*}
+    \sigma(UTU^{-1}) = \sigma(T) \\
+    \sigma_P(UTU^{-1}) = \sigma_P(T)
+  \end{align*}
+ \end{enumerate}
+\end{thm}
+
+\begin{proof}
+\begin{enumerate}
+  \item レゾルヴェント集合がopenなので成り立つ
+  \item $1 - T/ \lambda$は$|\lambda| > ||T||$の時全単射となるので,$\lambda$はレゾルヴェントとなる.
+   $\sigma(T) \neq 0$は一旦認める. 基本方針は全体になったとすると,内積を用いてそこから正則関数が定義できるが、レゾルヴェントの有界性から有界な整関数となり,定数関数となる。特に全てに対して0となるが、それは内積の正定値性に矛盾する.
+  \item $U(T - \lambda)U^{-1} = UTU^{-1} - \lambda$より,
+  $(T-\lambda)$が全単射と$U(T - \lambda)U$は全単射は同値,
+  また,
+  $UTU^{-1} - \lambda$にかけると$I$になるので,全単射
+  また$\mathrm{Ker}(T-\lambda) \to \mathrm{Ker}(UTU^{-1} - \lambda), x \mapsto Ux$は全単射なので,言えた.
+\end{enumerate}
+\end{proof}
+
+\begin{epl}
+  $L^2([0, 2\pi]$上の線形作用素$p_1$を以下で定める
+  $D(p_1) = \{f \mid f \mbox{は絶対連続}, f(0)=0\}$
+  $p_1f(x) = - i f'(x) a.e . x \in [0, 2\pi]$
+  絶対連続は任意の$\epsilon$に対し,ある$\delta$が存在し,$\sum (x_k,y_k) < \delta$なら$\sum (f(x_k), f(y_k))<\epsilon$となること,
+  絶対連続ならほとんど至る所微分可能なので上の写像は定義できる.
+  この時,$p_1$は閉作用素であり,$\sigma(p_1)=0$となる.
+\end{epl}
+$(X, B, \mu)$を測度空間とし,$f:X \to \mathbb{C}$に対し$\int |f(x)|^2 d\mu$となる$f$全体を$L^2(X)$と表す.
+この空間に$(f, g):= \int f(x)^*g(x) d\mu$で内積を定める.(実際にこれが内積になるにはほとんど至る所0による同一視が必要)
+
+今$ \int (f, p_1g) = \int -if(x)^* g'(x) = [-i f^*g] - \int -i f'^* g$であり,
+$f \in C_0^{\infty}(X)$に対し,その微分は$C_0^{\infty}(X)$であり,積分をうまく取ることにより,
+$C_{0}^{\infty} \subset D(p_1^*)$が言える.
+この時,$C_0^{\infty}$は$L^2$空間上Denseなので...なんだっけか?
+
+
+\begin{epl}
+  $L^2([0, 2\pi]$上の線形作用素$p_2$を以下で定める.
+  \begin{align*}
+  D(p_2) = C^1[0, 2\pi] \\
+  p_2f(x) = - i f'(x) a.e . x \in [0, 2\pi]
+  \end{align*}
+\end{epl}
+
+\input{lebeguse}
+
+
+
+
+\chapter{作用素解析とスペクトル定理}
 
 \section{正射影作用素}
 正射影定理から$\phi \mapsto \phi_M$が定まる.

@@ -1,0 +1,1097 @@
+\chapter{ルベーグ積分の基本}
+ルベーグ積分の一つの目標は極限との相性の良さである.
+特に典型的には以下の3定理で表される.
+
+\begin{thm}[単調収束定理]
+  $f_1, \ldots$が非負可測関数列でほとんど至るところの$x$で
+  \begin{equation*}
+   f_1(x) \le f_2(x) \le   \to f(x)
+  \end{equation*}
+とする.この時,$lim \int_E f_n = \int_E f$となる.
+つまり積分してからlimitを取ることとlimitをとってから積分することが一致している.
+\end{thm}
+
+\begin{thm}[ファトゥの補題]
+  $f_1, \ldots$が非負可測関数列とする.この時
+  \begin{equation*}
+   \int \underline{lim} f_n \le  \underline{lim} \int f_n
+  \end{equation*}
+\end{thm}
+
+\begin{thm}[ルベーグの収束定理]
+  $f_1, \ldots$が可測関数列でほとんど至るところの$x$で$\lim f_n(x)=f(x)$とする.ある可積分関数$g$が存在し,
+  \begin{equation*}
+   |f_n(x)| \le g(x), \mathrm{a.e} \mbox{ } x\in E, n=1,2
+  \end{equation*}
+  とする.この時,$f$は可積分で,$\lim \int_E f_n = \int_E f$となる.不等式評価と元の関数から示せる.
+\end{thm}
+
+これらは各点収束で議論できることに注意されたい.
+例えば連続関数列の極限は一般に連続とは限らない.
+\begin{epl}
+  $f_n(x) = x^n (x \in [0, 1])$とする.この時$f_n(x)$は連続関数で,$x \neq 1$の時$\lim f_n(x) = 0$,$x =1$の時$\lim f_n(x) = 1$となり,極限は不連続な関数になる.
+  このように極限では連続性は保たれないが,ルベーグ積分の意味でも可積分性は保たれる事が多い(多いというのは一定の上限が必要という意味).
+\end{epl}
+
+ルベーグ積分の一つのポイントは測度0集合の概念である.関数の中で挙動のおかしい少数部分を測度0集合におしこめる理論でもある(思想的な発言).
+
+\section{測度}
+
+\subsection{測度の定義}
+
+\begin{screen}
+\begin{dfn}
+$X$を集合とし,$M$を$X$上の集合族とする.
+\begin{itemize}
+   \item $\emptyset \in M$
+   \item $A \in M \Rightarrow X \setminus A \in M$,
+   \item $A,B \in M$に対し,$A \cap B \in M$
+\end{itemize}
+となる時\textbf{有限加法的集合族}、あるいは\textbf{集合代数}という.
+さらに集合代数であって,$A_i \in M$に対し,$\cup_{i=1}^{\infty} A_i \in M$となる時,$\sigma$-\textbf{代数}という.
+$\sigma$-代数の組$(X, M)$を可測空間といい、この時$M$の元を可測集合という.
+\end{dfn}
+\end{screen}
+
+\begin{screen}
+\begin{dfn}
+ $(X, M)$を可測空間とする.$\mu(\emptyset)=0$となる$\mu: M \to [0, \infty]$で
+ \begin{equation*}
+  \mu(\sum_{n=1}^{\infty} A_n )=\sum \mu(A_n)
+\end{equation*}
+を$X$上の測度という.$(X, M ,\mu)$を測度空間という.
+\end{dfn}
+\end{screen}
+
+\begin{screen}
+\begin{dfn}
+  $X$を位相空間とする.$X$の開集合を全て含む最小の$\sigma$-代数をボレル集合という.
+  また、ボレル集合上定義された測度をボレル測度という
+\end{dfn}
+\end{screen}
+
+\subsection{ルベーグ外測度}
+ルベーグ可測集合はボレル集合よりも真に大きくなる.そこでここではルベーグ外側度を定義する.
+
+\begin{screen}
+\begin{dfn}
+  $I=(a,b),[a, b),(a,b],[a,b]$に対し,$|I|=b-a$で定める.
+  $A \subset \mathbb{R}$に対し
+  \begin{equation*}
+   m^*(A)= \mathrm{inf} \left\{  \sum_{j=1}^{\infty} |I_j| \mid I_j \mbox{は開区間で} A \subset \cup I_j \right\}
+  \end{equation*}
+  を\textbf{ルベーグ外測度}という.
+\end{dfn}
+\end{screen}
+
+\begin{thm}
+  $A, B \subset \mathbb{R}, A_i \subset \mathbb{R}$とする.
+  \begin{enumerate}
+    \item $m^*(\emptyset) = 0$
+    \item $A \subset B$なら,$m^*(A) \le m^*(B)$
+    \item $m^*(\cup A_j) \le \sum m^*(A_j)$
+    \item $x \in \mathbb{R}$,$m^*(A+x) = m^*(A)$
+    \item 区間$I$に対し,$m^*(I) = |I|$
+  \end{enumerate}
+\end{thm}
+\begin{proof}
+  \begin{enumerate}
+    \item 空集合は全ての開集合の含まれるので,infは0になる.
+    \item $B$を被覆する$I_j$に対し,$A \subset \cup I_j$となるので,
+    $m^*(A) \le m^*(B)$
+    \item 真面目に議論すれば示せる.
+  \end{enumerate}
+\end{proof}
+
+
+\subsection{ルベーグ可測集合}
+\begin{screen}
+\begin{dfn}
+ $E \subset \mathbb{R}$とする.任意の$A \subset \mathbb{R}$に対し,
+ \begin{equation*}
+ m^*(A) = m^*(A \cap E) + m^*(A \cap E^c)
+ \end{equation*}
+ となる時,$E$を\textbf{ルベーグ可測集合}という.$\mathcal{L}$でルベーグ可測集合全体を表す.
+\end{dfn}
+\end{screen}
+
+
+\begin{screen}
+\begin{dfn}
+ $\mathcal{L}$上のルベーグ外測度を\textbf{ルベーグ測度}という.
+\end{dfn}
+\end{screen}
+
+\begin{rem}
+  ルベーグ測度の構成方法としては内測度を定義し,外測度と内測度が一致する時で定める方法もある.
+  $m_*(E) = |I| - m^*(I \setminus E)$で定め,これをルベーグ内測度という.
+\end{rem}
+
+\begin{thm}
+  \begin{itemize}
+    \item 任意の区間$I$はルベーグ可測
+    \item $\mathcal{L}$は$\sigma$-代数
+    \item $E \in \mathcal{L}$なら$E +x \in \mathcal{L}$となる.
+    \item $m^*(E)=0$なら$E \in \mathcal{L}$
+  \end{itemize}
+\end{thm}
+
+
+\begin{thm}
+  \begin{enumerate}
+    \item ルベーグ測度$m: \mathcal{L} \to [0, \infty]$は可測空間$(\mathbb{R}, \mathcal{L})$上の測度となる.
+    \item $E \in \mathcal{L}$に対し,$m(E+x) = m(E)$となる.
+  \end{enumerate}
+\end{thm}
+
+これを示すために補題を示す.
+
+\begin{lem}
+ $m^*(E)=0$なら$E \in \mathcal{L}$
+\end{lem}
+\begin{proof}
+これは$m^*(A)=m^*(A \cap E) + m^*(A \cap E^c)$を言えればよい.
+外測度の劣加法性から$m^*((A\cap E) \cup  (A \cap E^c) \le m^*(A \cap E) + m^*(A \cap E^c)$となるので,逆を言えればよい.
+$m^*((A\cap E) \cup  (A \cap E^c) \ge m^*(A \cap E) + m^*(A \cap E^c)$を示せれば良い.
+劣加法性から$m^*(E) = m^*(A \cap E) =0$であり,$m^*(A) \ge m^*(A \cap E^C)$となる.よって,
+$m^*(A) \ge m^*(A \cap E^C) + m^*(A \cap E)$よりルベーグ可測集合.
+\end{proof}
+
+
+\begin{lem}
+  $E \in \mathcal{L}$に対して,$E+x \in \mathcal{L}$
+\end{lem}
+\begin{proof}
+  \begin{align*}
+  m^*(A) &= m^*(A-x \cap E) + m^*(A-x \cap E^c)  & E \in \mathcal{L} \\
+         &= m^*(A \cap E +x) + m^*(A \cap (E+x)^c ) & x \mbox{が平行移動不変性より}
+  \end{align*}
+\end{proof}
+よって$E+x \in \mathcal{L}$となる.
+
+\begin{lem}
+ $E\in \mathcal{L}$なら$E^c \in \mathcal{L}$,$E_1, E_2 \in \mathcal{L}$なら$E_1 \cup E_2 \in \mathcal{L}$となる.
+\end{lem}
+\begin{proof}
+$m^*(A) = m^*(A \cap E^c) + m^*(A \cap E)$より$E^c \in \mathcal{L}$である.
+また
+\begin{align*}
+   & m^*(A \cap (E_1 \cup E_2)) + m^*(A \cap (E_1 \cup E_2)^c) \\
+ \le & m^*(A \cap E_1 ) + m^*(A \cap E_1^c \cap E_2) + m^*(A \cap (E_1 \cup E_2)^c)  & \mbox{劣加法性}\\
+ = & m^*(A \cap E_1 ) + m^*(A \cap E_1^c \cap E_2) + m^*(A \cap E_1^c \cap E_2^c) \\
+ = & m^*(A \cap E_1 ) + m^*(A \cap E_1^c) \\
+ = & m^*(A)
+\end{align*}
+より示せた.
+\end{proof}
+
+\begin{lem}
+ $E_1 \ldots En \in \mathcal{L}$が互いに素なら,任意の$A \subset \mathbb{R}$に対し,
+ \begin{equation*}
+  m^*(A \cap \cup_{i=1}^n E_i)  = \sum_{i=1}^n m^*(A \cap E_i)
+ \end{equation*}
+\end{lem}
+\begin{proof}
+  $n$に対する帰納法で示す.$n=1$は自明.
+  $E_i$は互いに素だから.$m^*(A \cap \cup_{j=1}^n E_j \cap E_n^c) = m^*(A \cap \cup_{j=1}^{n-1}E_j)$
+  $m^*(A \cap \cup_{j=1}^n E_j \cap E_n) = m^*(A \cap E_n)$となり,
+  $m^*(A \cap \cup E_j) = m^*(A \cap E_n) + m^*(A \cap \cup_{j=1}^{n-1}E_j)$となり,帰納法より
+  $m^*(A \cap \cup E_j) = \sum m^*(A \cap E_j)$となる.
+\end{proof}
+
+\begin{lem}
+  $E_i \in \mathcal{L}$なら$\cup_{n=1}^{\infty}E_n \in \mathcal{L}$となる.さらに$E_1, E_2, \ldots$が互いに素なら,$m(\sum E_n ) = \sum m(E_n)$となる.
+\end{lem}
+\begin{proof}
+$E_j$が互いに素の場合に$ \cup_{n=1}^{\infty} E_n \in \mathcal{L}$を示す.
+(集合代数なので、それだけ示せば十分である.なぜなら$E'_n = \cup_{i=0}^{n}E_i \setminus \cup_{i=0}^{n-1} E'_{i}$と取れば良い.)
+これは$m^*(A)= m^*(A \cap \cup_{j=1}^n E_j) + m^*(A \cap  (\cup_{j=1}^n E_j)^c)$であり,単調性から
+$m^*(A) \ge m^*(A \cap \cup_{j=1}^n E_j) + m^*(A \cap  (\cup_{j=1}^{\infty} E_j)^c)$となる.
+$E_i$が互いに素なので $m^*(A) \ge \sum m^*(A \cap  E_j) + m^*(A \cap  (\cup_{j=1}^{\infty} E_j)^c)$となる.
+となり,これが任意の$n$に対して成り立つので、
+$m^*(A) \ge  \sum_{j=1}^{\infty} m^*(A \cap  E_j) + m^*(A \cap  (\cup_{j=1}^{\infty} E_j)^c)$となる.
+右辺の収束は単調増加かつ有界であることから従う.
+また劣加法性から
+$\sum_{j=1}^{\infty} m^*(A \cap  E_j) + m^*(A \cap  (\cup_{j=1}^{\infty} E_j)^c) \ge  m^*(A \cap  \cup_{j=1}^{\infty} E_j) + m^*(A \cap  (\cup_{j=1}^{\infty} E_j)^c)$となるので,$\cup E_i \in \mathcal{L}$となる.
+等式の証明は
+この後,$A = \cup E_j$を取ると$m^*(A) = m^*(\cup E_j) = \sum_{j=1}^{\infty} m^*(E_j)$となる.
+\end{proof}
+
+\begin{lem}
+ 任意の区間はルベーグ可測
+\end{lem}
+\begin{proof}
+  $(a, \infty) \in \mathcal{L}$を言えばよく,適当に$A \subset I_i$でinfに十分近い$I_i$を取り,$I_i^{(1)}= I_i \cap (a, \infty)$を取り,$I_i^{(2)}= I_i \cap (a, \infty)^c$を取り、
+  $A \cap (a, \infty) ,A \cap (a, \infty)^c$に対し,直接評価し一致を示せる.
+\end{proof}
+
+すぐわかることして任意のボレル集合はルベーグ可測
+すぐわかることして任意のボレル集合はルベーグ可測
+
+
+\begin{screen}
+\begin{dfn}
+ $(X, M, m)$を測度空間とする.
+ \begin{enumerate}
+   \item  測度0の可測集合の部分集合が全て可測である時 \textbf{完備}という.
+   \item $m(X_n) < \infty$となる$X_n \in M$が存在し,$X = \cup X_n$となる時$\sigma$有限という.
+ \end{enumerate}
+\end{dfn}
+\end{screen}
+
+\begin{prop}
+ルベーグ測度は次の性質を満たす.
+\begin{enumerate}
+    \item $A, B \in \mathcal{L}, A \subset B$なら$m(A) \le m(B)$.
+    \item $A, B \in \mathcal{L}$の時,$m(A \cup B) + m(A \cap B) = m(A) + m(B)$
+    \item $A_1, \ldots, A_n \ldots \in \mathcal{L}$なら$m(\cup A_n) \le \sum m(A_n)$
+\end{enumerate}
+\end{prop}
+\begin{proof}
+\begin{enumerate}
+    \item $B \setminus A = B \cup (A^c)$よりルベーグ可測で$B = A + B \setminus A$でルベーグ測度の性質から言える.
+    \item $C:=A \setminus B, D = B \setminus A$とすると$m(A\cup B) = m(C) + m(D) + m(A\cap B)$であり,$m(A)= m(A\cap B) + m(A\setminus B), m(B)=m(A \cup B) + m(B \setminus A)$より言える.
+    \item $\sigma$加法性から明らか.$(B_n = A_n \setminus \cup_{i=1}^{n-1} A_{i}$とすれば,$B_n$は共通部分を持たないので、$m(\cup A_n) = \sum m(B_n) \le \sum m(A_n)$となる.
+\end{enumerate}
+\end{proof}
+
+\begin{rem}
+$A \subset B$の時$m(B\setminus A)$の値は?$A,B$共に無限大の場合はどんな値も取りうる.
+例$A= (a, \infty), B = (b, \infty)$とすると$m(B \setminus A) = (a-b)$となるが,$a,b$はどんな値も取りうる...(無限大はとらないが、その場合は$- \infty$から始まる区間を取れば良い.
+\end{rem}
+
+\begin{prop}[測度の単調収束定理]
+\begin{itemize}
+  \item $E_1 \subset E_2 \subset \ldots $なら,$\displaystyle \lim_{j \to \infty} m(E_j) = m(\cup E_j)$
+  \item $E_1 \supset E_2 \supset \ldots $なら,$\displaystyle \lim_{j \to \infty} m(E_j) = m(\cap E_j)$
+\end{itemize}
+\end{prop}
+
+\begin{proof}
+$F_j = E_j \setminus E_{j-1}$とすると,$F_j$同士は共通部分を持たないので,以下となる.
+\begin{align*}
+m(\cup E_j) &= m(\cup F_j)  & \mbox{集合の議論}\\
+            & = \sum m(F_j)  & \mbox{σ加法性}\\
+            & = \lim_{j \to \infty}\sum_{j=1}^n m(F_j) \\
+            & = \lim_{j \to \infty} m(E_j) & \mbox{集合の議論}
+\end{align*}
+\end{proof}
+逆は$F_i = E_i^c$とすると,単調増加なので,$m(X) - \lim m(E_j) = \lim m(X \setminus E_j) =  \lim m(F_j)  = m(\cup F_j) = m(X) - m(\cup E_j)$となるので,言える.
+
+
+\section{ルベーグ可測関数}
+\begin{screen}
+\begin{dfn}
+  $\mathbb{R}$のルベーグ可測集合$E$と$E$に含まれるルベーグ可測集合からなる可測空間からの写像$f: E \to [-\infty, \infty]$が\textbf{ルベーグ可測}とはルベーグ可測集合の逆像が可測集合となること
+\end{dfn}
+\end{screen}
+ここではルベーグ可測は区間の逆像がルベーグ可測であることさえいえばよいとする(これが上の定義の意味で同値は要確認)
+
+\begin{prop}
+ $f,g : E \to \mathbb{R}$が可測なら$cf, f +g, f\cdot g$は可測となる.
+\end{prop}
+\begin{proof}
+  \begin{itemize}
+    \item $cf$が可測なのは$c > 0$の時$cf < a$が$f < a/c$と同値になり.$cf^{-1}((-\infty, a)) = f ^{-1}(-\infty, a/c)$となるためである.
+    \item $f + g < a$も同様に考えると$(f+g)^{-1}(-\infty , a) = \cup_c (f^{-1}(-\infty, c) \cap g^{-1}(-\infty, a-c))$より可測集合の和集合や共通部分は可測なので言える.積も同様.
+  \end{itemize}
+\end{proof}
+
+\begin{prop}
+ $f: E \to [- \infty, \infty]$が可測で,$f = g \mathrm{a.e}$なら$g$は可測. ただし$a.e$とは$f \neq g$となる$x$全体のなす集合の測度が０を意味する.
+\end{prop}
+\begin{proof}
+  $g(x > a)$で$\{x \mid g(x)> a\}$を表す.
+  $\Omega = \{f \neq g\}$とする.$g(x > a) = f(x > a) \cap \Omega^c \cup \Omega \cap g(x > a)$となる.
+  左は可測集合同士の共通部分なので可測.右は測度0の集合の部分集合なので可測.(ルベーグ測度の完備性を利用)
+\end{proof}
+
+\begin{prop}
+$f:[a,b] \to \mathbb{R}$がリーマン可積分とすると,$f$は可測関数
+\end{prop}
+\begin{proof}
+$f$がリーマン可積分なのは不連続点が測度0集合になることなので,$D$を不連続点の集合,$\Omega = [a,b]\setminus D$とする.
+$\Omega$上連続なのと不連続点の集合が測度0であることから
+$f(x > a) = f(x > a) \cup \Omega^c \cup \Omega \cap f(x > a)$と分解すると上と同様の議論で証明できる.
+\end{proof}
+\subsection{可測関数の収束極限}
+
+\begin{lem}
+ $g_n$を$E$上の可測関数列とする.
+ \begin{equation*}
+  \bar{g}(x) = \mathrm{sup}\{ g_n(x)\} , \underline{g}(x)= \mathrm{inf}\{g_n(x)\}
+ \end{equation*}
+ で定める関数$\bar{g}(x), \underline{g}(x)$は可測
+\end{lem}
+\begin{proof}
+$\bar{g}(x > a) = \cup_n g_n(x > a)$より可測.infも同様.
+\end{proof}
+
+\begin{thm}
+ $f_n$が可測関数の列とすると,上極限$\overline{\lim} f_n$,下極限$\underline{\lim} f_n$は可測関数になる.
+\end{thm}
+\begin{proof}
+上極限は$\mathrm{inf}_n \mathrm{sup}_{k \ge n} f_k$なので上の補題から可測性が言える.下極限も同様.
+\end{proof}
+\begin{rem}
+ 特に上極限と下極限が一致する、つまり極限が存在する時,極限は可測関数になる.(収束の意味での完備性)
+ これはリーマン積分可能な関数やボレル可測な関数の列の場合は成り立たなかった.(測度0集合の部分集合が全てルベーグ可測集合であることが本質.)
+\end{rem}
+
+\begin{screen}
+\begin{dfn}
+ 値域が有限な可測集合を\textbf{単関数}という.
+ 単関数$\phi(x) = \sum a_j \xi_{E_j}(x)$と表される.($E_j = \phi^{-1}(a_j)$)
+ $\phi$の値域を$\{a_1, \ldots, a_n\}$,$E_j = \{x \in E \mid \phi(x)=a_j\}$とした時に
+ $\phi(x)= \sum a_j \chi_{E_j}(x)$と表される.これを\textbf{単関数の標準表現}という.
+\end{dfn}
+\end{screen}
+
+\begin{thm}
+ $f$を可測集合$E$上の有界な可測関数とする.この時$|\phi_n(x)| \le |f(x)|$を満たし,$\displaystyle \lim_{n \to \infty} \phi_n(x) =  f(x)$と一様に収束する単関数列$\{\phi_n\}$が取れる.
+\end{thm}
+$x$のとり方によらず$|(f - \phi_n)(x)| < 2^{-n}$となるような$\phi_n$を構成する
+そのために$E_{n,j}= \{x \in E \mid j/2^n < f(x) < (j+1)/ 2^n\}$を考える.
+$\phi_n(x) = \sum_{j=1}^{\infty} j/2^n \xi_{E_{n,j}}(x) + \sum_{j=-1}^{-\infty}(j+1)2^{-n}\xi_{E_{n,j}}(x)$とすると,$f(x)$は有界なので、十分大きい$j$や十分小さい$j$に対し$E_{n, j} = \emptyset$となる.
+なので、$\phi_n(x)$は単関数の標準表現になっている.
+また,常に$|\phi_n(x)| < |f(x)|$より小さく,さらに$|(f - \phi_n)(x)| < 2^{-n}$となるものが構成できる.
+
+\begin{cor}
+ $E$上の有界関数$f$が可測であるためには$\lim \phi_n(x) = f(x)$となる単関数列が存在することが必要十分である.
+\end{cor}
+
+\begin{screen}
+\begin{dfn}
+ 区間$[a, b]$上の関数$\phi(x)$は$a=x_0 < x_1 < \ldots < x_n = b$が存在して,各小区間$(x_j, x_{j+1})$上ある定数に等しい時,\textbf{階段関数}と呼ばれる.
+\end{dfn}
+\end{screen}
+\begin{rem}
+ 単関数であって$E_j$が区間の和集合でかけるものを階段関数という.
+\end{rem}
+\begin{thm}
+ $f$を[a,b]上のほとんど至るところ有限な値を取る可測関数とする.どのように小いさな$\epsilon > 0$と$\delta > 0$に対しても
+ \begin{equation*}
+  m(\{x \in [a, b] \mid |f(x) - h(x)| > \epsilon\}) < \delta
+ \end{equation*}
+をみたす階段関数$h(x)$が存在する.$M_1 \le f \le M_2$なら,$h$を$M_1 \le h \le M_2$をみたすように取れる.
+\end{thm}
+
+
+\section{ルベーグ積分}
+$f:E \to [-\infty, \infty]$を可測関数とした時,
+$\lambda_f(t) = m(E(f> t))$で定める.これを$f$の\textbf{分布関数}という.
+
+\begin{lem}
+ \begin{itemize}
+   \item $\lambda_f(t)$は単調減少関数で$\lambda_f(t) \le m(E)$となる
+   \item $f \le M$なら$t \ge M$の時$\lambda_f(t)=0$となる.
+   \item $f,g$に対し,$\lambda_{f+g}(t) \le \lambda_f(t/2) + \lambda_g(t/2)$
+ \end{itemize}
+\end{lem}
+\begin{proof}
+$(f+g)(x) > t$の時,$f(x)$と$g(x)$のいずれかは$t/2$より大きい.よって, $E(f+g > t) \subset E(f > t/2) \cup E(g > t/2)$となる.
+さらに劣加法性から$\lambda_{f+g}(t) \le \lambda_f(t/2) + \lambda_g(t/2)$となる.
+\end{proof}
+
+\begin{screen}
+\begin{dfn}
+ $E$が測度が有限な可測集合,$f$を$E$上の有界な非負可測関数とする.この時$\int_E f dx := \int_0^{\infty} \lambda_f(t)dt$で定義する.
+ 無限の場合はこれをlimitを取る形で定める.
+ これが有限な値を取る時\textbf{ルベーグ積分可能}という.
+ $f$が一般の可測関数の場合は$f^+ - f^-$に分割しそれぞれについてルベーグ可積分である時,ルベーグ可積分という.
+\end{dfn}
+\end{screen}
+
+\begin{prop}
+ $0 \le f \le g$なら,$\int f \le \int g$となる.
+ $0 \le f, g$がルベーグ可積分なら$f + g$がルベーグ可積分となる.
+\end{prop}
+
+\subsection{単関数の積分}
+
+\begin{lem}
+$\phi = \sum a_j \chi_{E_j}$を単関数の標準表現とする.
+この時
+
+\begin{equation*}
+\int \sum a_j \chi_{E_j} = \sum a_j m(E_j)
+\end{equation*}
+となる
+\end{lem}
+
+\begin{equation*}
+\lambda_{\chi_{E_j}} = \begin{cases}
+ 0    & t > 1 \\
+ m(E_j)  & 0 < t \le 1
+\end{cases}
+\end{equation*}
+なので,$\int \lambda_{\chi_{E_j}} = \int_0^1 m(E_j) dt$
+
+さらに積分の線形性が(示していないが直接けいさんすることで成り立つことがわかるので)言えた.
+
+
+単調収束定理を示す.
+\subsection{単調収束定理とファトゥの補題}
+\begin{thm}[単調収束定理]
+$f_1, f_2 \ldots$が非負可測関数列でほとんど至るところ
+\begin{equation*}
+    f_1(x) \le f_2(x) \ldots \to f(x)
+\end{equation*}
+とする.この時, $\lim \int_E f_n = \int_E f$となる.
+\end{thm}
+
+\begin{proof}
+$f_i$も$f$もルベーグ可積分な場合にのみ示す.
+$|\int_{0}^{\infty} \lambda_f(t) dt - \int_0^n \lambda_f(t) | < \varepsilon $となる$n$が存在する.
+$\lambda_f$がリーマン可積分なので,
+$|\int_0^n \lambda_f(t) - \sum _{j=1}^N\lambda_f(t_j)(t_j - t_{j-1})| < \varepsilon$となる$N$が存在する.
+$\sum _{j=1}^N\lambda_f(t_j)(t_j - t_{j-1}) = \sum _{j=1}^N m(f > t_j)(t_j - t_{j-1})$であり,測度の一様収束性から
+$|\sum _{j=1}^N m(f > t_j)(t_j - t_{j-1}) - \sum _{j=1}^N m(f_n > t_j)(t_j - t_{j-1})| < \epsilon$とできる.
+$f_n$についても同様に分割することで
+$|\int f_n - \int f |< 5 \varepsilon$とできる.よって示された.
+\end{proof}
+
+\begin{thm}[ファトゥの補題]
+  $f_1, f_2, \ldots $が非負可測関数とする.この時,
+  \begin{equation*}
+   \int \underline{\lim} f_n \le \underline{\lim} \int f_n
+  \end{equation*}
+となる.
+\end{thm}
+\begin{proof}
+$f(x) = \underline{\lim} f_n(x)$とし,$g_n(x) = \inf_{n \ge k} \{ f_k(x) \}$とする.
+$f(x) = \sup g_n(x)$より,$g_n(x) \le f(x)$で,$g_1 \le g_2 \ldots$となる.
+よって単調収束定理より,$\lim \int g_n = \int f$となる.さらに,$g_n \le f_n$より,
+$\int g_n \le \int f_n$となる.よって,
+
+\begin{equation*}
+\int f = \lim \int g_n = \underline{\lim} \int g_n  \le \underline{\lim} \int f_n
+\end{equation*}
+\end{proof}
+
+\subsection{単関数による積分の近似}
+\begin{lem}
+\begin{enumerate}
+    \item $f \ge 0$をほとんど至るところ有限な可測関数とする.この時$m(E(\phi_n \neq 0)) < \infty$を満たす単関数の増大列で,$0 \le \phi_1(x) \le \phi_2(x) \to f(x)$となるものが存在する.
+    この時,$\int_E f = \lim \int_E \phi_n$
+    \item $f$が可積分とする. $|\phi_n(x)| \le |f(x)|$を満たし,至るところ$f$に収束する単関数の列$\{ \phi_n \}$で$\int_E f = \lim \int \phi_n$を満たすものが存在する.
+\end{enumerate}
+\end{lem}
+\begin{proof}
+\begin{equation*}
+    \phi_n(x) = \begin{cases}
+    0  & |x| > n,  f(x) > n \mbox{のいずれかが成り立つ時} \\
+    k/2^n &  |x| \le n, f(x) \in [k/2^n, (k+1)/2^n) \mbox{の時}
+    \end{cases}
+\end{equation*}
+とするとこれは単関数になる.(値域が有限なので)
+さらに$\phi_n(x) \le \phi_{n+1}(x)$となる.$\phi_n(x) = k/2^n$の時$f(x) \ge k/2^n = 2k/ 2^{n+1}$となるので
+よって$\lim \phi_n(x) = f(x)$が言えればよい.それは,
+十分大きい$n$を取れば,$|f(x) - \phi_n(x) | < 1/2^n$となるので言えた.
+2.は負の部分と正の部分に分割すればよい.
+\end{proof}
+
+\begin{thm}
+ $m(E) < \infty$,$f: E \to \mathbb{R}$は有界とする.この時,
+ \begin{equation*}
+     \inf \left\{ \int_E \phi: \phi \mbox{は単関数} \ge f \right\} = \sup \left\{ \int_E \phi: \phi \mbox{は単関数} \le f\right\}
+ \end{equation*}
+となることと$f$が可測であることが同値である.
+\end{thm}
+\begin{proof}
+定数を足すことで$f$は非負と思って良い.
+$\Rightarrow$を示す. $f$を可測とする.上の式の左辺を$\Sigma_1$,右辺を$\Sigma_2$とする.$\phi_n$を
+\begin{equation*}
+    \phi_n(x) = 
+    k/2^n, f(x) \in [k/2^n, (k+1)/2^n) \mbox{の時}
+\end{equation*}
+で定め,$\psi_n(x)$を
+\begin{equation*}
+    \psi_n(x) = k+1/2^n  f(x) \in [k/2^n, (k+1)/2^n) \mbox{の時}
+\end{equation*}
+とする.
+$\phi_n(x) - \psi_n(x) = 1/2^n$となる.
+また$E(f(x) < k/2^n)$は可測なので,$E(\phi_n(x) = k/2^n) = E(\phi_n(x) < k+1/2^n) \setminus E(\phi_n(x) < k/2^n$はルベーグ可測集合になる.
+$\psi_n$についても同様.よってこれらはルベーグ可積分であり,
+よって,$0 \le \Sigma_1 - \Sigma_2 \le \int \psi_n - \int \phi_n = \int 2^{-n} = 2^{-n}m(E)$.これが任意の$n$に対して成り立つので、
+$\Sigma_1 = \Sigma_2$となる.
+
+逆を示す.
+
+$\Sigma_2 = \Sigma_1$より,ある$\phi_j \le f \le \psi_j$となる単関数で,$\int \psi_n \to \Sigma_1$,$\int \phi_n \to \Sigma_2$となるものが取れる.
+max,minをうまく取ることにより,
+\begin{equation*}
+    \phi_1(x) \le \phi_2(x) \le \ldots \le f(x) \le \ldots \psi_2(x) \le \psi_1(x)
+\end{equation*}
+
+$\phi(x) = \lim \phi_n(x), \psi(x) = \lim \psi_n(x)$とする.これらは可測関数であり$\phi(x) \le f(x) \le \psi(x)$となる.
+よって$m(\phi(x) < \psi(x)) = 0$であれば$\phi(x) = f(x) = \psi(x) .\mu a.e$である.この時$f(x)$は可測関数になる.よってこれを示す.
+$\Omega_k = E(\psi - \phi > 1/k)$とする.
+$\psi_n - \phi_n \ge \phi - \psi \ge 1/k X_{\Omega_k}$であり,
+\begin{equation*}
+    \int (\psi_n - \phi_n) \ge \int (\psi - \phi) \ge \int 1/k X_{\Omega_k} = 1/k m(\Omega_k)
+\end{equation*}
+となる.$n \to \infty$の時左辺は0になるので、任意の$k > 0$に対し,$m(\Omega_k) = 0$となるので、$m(\phi(x) < \psi(x)) = 0$となる.
+\end{proof}
+
+\subsection{積分の線形性と単調性}
+
+\begin{thm}
+$f,g$を$E$上の可積分関数とする.$a,b \in \mathbb{R}$とする.このとき以下が成り立つ.
+
+\begin{itemize}
+    \item $\int af + bg = a \int f + b \int g$
+    \item $A, B \subset E$が可測で,$A \cap B = \emptyset$ならば,$\int_{A \cup B}f = \int_A f + \int_B f$
+    \item $f \le g$とすると, $\int f \le \int g$
+\end{itemize}
+\end{thm}
+\begin{proof}
+$f$が非負関数とし,$\lambda_{f}(t) = m(f> t)$とする.このとき$\int f = \int_0^{\infty} \lambda_f(t)$であった.
+今$a> 0$の場合だけを示す.他も同様にできる.$af $に対して考えると,$\lambda_{af}(t) = m(af > t) = m(f > t/a) = \lambda_{f}(t/a)$となる.
+よって
+\begin{equation*}
+    \int af = \int \lambda_{af}(t) = \int_{0}^{\infty} \lambda_f(t/a) dt = \int_{0}^{\infty} a\lambda_f (t)dt =  a \int f
+\end{equation*}
+$f,g$共に非負の単関数の場合を考える.
+つまり,$f = \sum a_i \chi_{A_i}, g = \sum b_j \chi_{B_j}$とする.$C_k = A_i \cap B_j$とする.$C_k$同士は互い共通部分を持たず,$\cup C_k = E$となることに注意すると,
+このとき$f+g = \sum_{k} (a_i+b_j) C_k$も単関数となる.
+このとき,$\int f+g =  \sum m(C_k)(a_i+b_j) = \sum m(A_i) a_i + \sum m(B_j) b_j = \int f + \int g$となる.
+一般の場合は
+$f = \lim \phi_n, g = \lim \psi_n$となる,単調増加な単関数列$\phi_n, \psi_n$が取れる.すると,$f + g = \lim (\phi_n + \psi_n)$で,これも単調増加な単関数列となる.
+すると,単調収束指定理から$\int f + g = \lim \int \phi_n + \psi_n$となる.単関数に対して積分が分解できるので,
+$\lim \int \phi_n + \psi_n = \lim \int \phi_n +  \lim \int \psi_n = \int f + \int g$となる.
+２つ目は$f =  f_A + f_B$と分解すればよい.$f_A(x)$は$x \in A$のとき,$f(x)$,そうでないとき$0$とする.これはルベーグ可測である.
+このとき$\lambda^{A \cup B}_{f_A}(x) = m(f_A > x) = m ( (f > x) \cap A) $
+このとき$\lambda^{A}_{f_A}(x) = m(f_A > x \cap A) = m ( (f > x) \cap A) = \lambda^{A}_f(x) = \lambda^{A \cup B}_{f_A}(x)$となる.
+よって$\int_{A \cup B} f =  \int_{A \cup B} f_A + \int_{A \cup B} f_B = \int_A f_A + \int_B f_B = \int_A f + \int_B f$となる.
+\end{proof}
+
+
+\begin{prop}[項別積分定理]
+ \begin{enumerate}
+     \item 可測な関数列$u_1, u_2, ... \ge 0$に対し,$\int_E \sum u_n = \sum \int u_n$
+     \item $A_i$を互いに素とする.$f \ge 0$が可測なら$\int_{\sum A_i} f = \sum \int_{A_i} f$
+\end{enumerate}
+\end{prop}
+\begin{proof}
+$f_n = \sum_{i=1}^n u_i$とすると,$f_n$は単調増加なので,
+\begin{equation*}
+\int \sum_{i=1}^{\infty} u_i = \lim_{n \to \infty} \int f_n = \lim_{n \to \infty} \int \sum_{i=1}^n u_i = \lim_{n \to \infty} \sum_{i=1}^n \int u_i 
+\end{equation*}
+１つ目のイコールは単調収束定理,２つ目は定義,３つ目は積分の加法性である.
+\end{proof}
+
+\subsection{変数変換公式}
+\begin{thm}
+ $\phi: \mathbb{R} \to \mathbb{R}$を$C^1$級で$\phi'(x) > 0$とする.$E \subset \mathbb{R}$に対し,$F = \phi(E)$とする.
+ $f : F \to [- \infty, \infty]$とする.このとき,
+ \begin{enumerate}
+     \item $E$が可測なら,$F = \phi(E)$も可測,$E$がゼロ集合であることと$F$が測度ゼロ集合であることが同値.
+     \item $f$が可測なら,$f \circ \phi: E \to [- \infty, \infty]$も可測.
+     \item $f$が非負可測なら$\int_F f(x) = \int f(\phi(t)) \phi'(t) dt$となる.
+     \item $f$が可積分なら$f\circ \phi$も可積分であり,$\int_F f(x) = \int f(\phi(t)) \phi'(t) dt$となる.
+ \end{enumerate}
+\end{thm}
+\begin{proof}
+proof 
+\begin{enumerate}
+    \item 
+$\phi^{-1}$も連続関数であり,特にルベーグ可積分なので, $F$は逆関数$\phi^{-1}$での$E$の逆像なのでルベーグ可測集合である.
+
+$\cup I_j$が有界な集合とする.すると$\cup I_j$を含む有界な閉集合$V$が存在する.
+$\phi$は有界閉集合$V$上で最大値$a$,最小値$b$を持つち.$C^1$級なので,$\phi'(x)$も連続関数であり,最大値$c$を持つ.
+今$I_j = (a_j,b_j)$とする.
+$|\phi(I_j)| = \phi(b_j) - \phi(a_j) = (b_j - a_j) \phi'(c_j)$となる(平均値の定理).
+よって$|\phi(I_j)| < c |I_j|$が言えた.
+
+これから$E$が測度ゼロ集合の場合,
+$\forall \epsilon > 0$に対し,十分大きい$n$を取れば$\sum |I_j^n | < \epsilon$となる.
+よって
+$\sum |\phi(I_j^n)| < c \epsilon$となり,$\phi(E)$が測度ゼロとなることがわかる.
+逆も同様に言える.
+\item 連続関数はルベーグ可測であるため,$\phi$もルベーグ可測になる.ルベーグ可測関数の定義はルベーグ可測集合の逆像がルベーグ可測集合になることであった.
+よって$A \subset [- \infty, \infty]$がルベーグ可測とすると,$f^{-1}(A)$はルベーグ可測である.また,$\phi{-1}(f^{-1}(A)$もルベーグ可測である.
+よって$(f \circ \phi)^{-1}(A) = \phi^{-1}(f^{-1})(A)$なので,ルベーグ可測集合になるので,言えた.
+\item 
+$\phi(\mathbb{R}) = (c, d)$とする,$(- \infty \le c \le d \le \infty)$.
+$f$を$x \in F^c$に対しては$f(x) = 0$として,$f: \phi(\mathbb{R}) \to [- \infty, \infty]$に延長する.
+この時$f$は可測関数になり,$\int_{[c,d] - F} f(x)  = \int_{E^c} f(\phi(t))\phi'(t)dt = 0$となる.
+よって,$E = \mathbb{R}$の時に示せば良い.
+さらに,$c_n > c, d_n < d$で$c_n \to c, d_n \to d$となる列を取る.
+この時,$\phi(a_n) = c_n ,\phi(b_n) = d_n$とかける.
+今,$\alpha_n \to - \infty, \beta_n \to \infty$であり,単調収束定理より,
+\begin{equation*}
+    \int_{c_n}^{d_n} f(x) dx = \int_{\alpha_n}^{\beta_n}  f(\phi(t))\phi'(t)dt
+\end{equation*}
+が言えれば良い.(実際には
+$f_n(x) = \begin{cases} 
+ f(x)  &   (x \in [c_n, d_n]\\
+ c    & otherwise
+\end{cases}$
+を取れば良い.
+
+
+以下の流れで示す
+\begin{enumerate}
+\item 開区間の定義関数の場合
+\item 一般の開集合,閉集合の定義関数の場合
+\item 閉集合の無限和でかける集合上の定義関数の場合
+\item 一般の可測集合の定義関数の場合
+\item 単関数の場合
+\item 全体
+\end{enumerate}
+
+\begin{itemize}
+    \item $f(x)$が開区間$(a,b)$の特性関数のとき$a = \phi(\alpha), b = \phi(\beta)$に対し,
+    \begin{equation*}
+        \int_{a}^b fdx = \int_{a}^b dx = b-a = \int_{\alpha}^{\beta} \phi'(x) dx
+    \end{equation*}
+    となる.(有界区間上のルベーグ積分とリーマン積分の一致を使う.)
+\end{itemize}
+開集合は互いに素な開区間の有限和で表せる.つまり$O = \cup (a_n, b_n), ((a_n, b_n ) \cap  (a_m, b_m) = \emptyset$となるので,
+$f$が開集合の定義関数の場合も正しい.
+閉集合$K \subset (c_n, d_n)$の定義関数は$(c_n, d_n),K^c$の定義関数の差になる.
+つまり,$\chi_K = \chi_{c_n, d_n} - \chi_{K^c}$となるので,ルベーグ積分同士を引くだけなので、一致する.
+閉集合の無限和でかける場合,
+特に$K_1 \subset K_2 \subset \ldots$が取れ,$L = \cup K_n$とする.この時,$\chi_{K_1} \le \chi_{K_2} \ldots ... \to \chi_L$となるので,単調収束定理より,成り立つ.
+またこのような閉集合の無限和でかける集合全体を$\mathcal{F}_{\sigma}$集合という.
+
+一般の可測集合$F$に対し,$m(F \setminus L) = 0$となる$L \in \mathcal{F}_{\sigma}$が存在する.
+$N = F \setminus L$とおくと,$\phi^{-1}(N)$も測度0になる.
+よって一般の可測集合の場合の定義関数でも成り立つ.
+
+単関数は$f = \sum a_k \chi_{F_K}$とかけるものなので,積分の線形性から成り立つ.
+一般の場合は,単関数による増加列を作ることによって,すべて示される.
+\end{enumerate}
+\end{proof}
+
+\section{ルベーグの収束定理とその応用}
+
+\begin{thm}[ルベーグの収束定理]
+$f_1, f_2 \ldots, $を$E$上の可積分関数列でほとんど全ての$x \in E$に対し,$\lim f_n(x) = f(x)$かつある可積分関数$g$が存在し,
+\begin{equation*}
+    |f_n(x) |  \le g(x)  \mbox{a,e}, x \in E
+\end{equation*}
+とすると,この時$f$は可積分で,$\lim \int f_n = \int f$となる.
+\end{thm}
+
+\begin{proof}
+ファトゥの補題を使って示す.
+$f$が非負の時のみ示す.(後は$f^+ - f^-$に分割して示せば良い.)
+
+ファトゥの補題から$\int  f \le  \underline{\lim} \int f_n  \le \int g$となる.
+また$g - f_n$に対し,ファトゥの補題から
+$\int g - f \le \underline{\lim} \int g - f_n$となり,
+\begin{align*}
+    \int g - f  & \le \underline{\lim} \int g - f_n \\ 
+                & =  \int g - \overline{\lim}  \int f_n
+\end{align*}
+よって$\overline{\lim} \int f_n  \le \int f$となる.
+よって$\overline{\lim} \int f_n  \le \underline{\lim} \int f_n$となり,示された.
+\end{proof}
+
+
+\begin{thm}
+ $E$を可測集合,$I$を開区間,$Q = E \times I$とする.$(x, t) \in Q$の関数$f(x, t)$は$t$について偏微分可能で,任意に$t$を固定すると,$x$について可積分とする.
+ この時ある可積分関数$g$で行かを満たすものが存在するとする.
+ \begin{equation*}
+     \left\vert \frac{\partial f}{\partial x} (x, t) \right\vert \le g(x)
+ \end{equation*}
+ この時,$F(t) = \int_E f(x, t)$は微分可能で,$F'(t) = \int_E \frac{\partial f}{\partial t}(x, t) dt$となる
+ 
+\end{thm}
+\begin{proof}
+\begin{equation*}
+    \frac{F(t + h) - F(t)}{h} = \int \frac{f(x , t+h) - f(x, t) }{h}dx
+\end{equation*}
+$g_h(x) =  (f(x, t+h) - f(x, t)) /h$とする.$h \to 0$の時,$g_h(x) \to \frac{\partial f}{\partial t}(x, t)$となる.
+ 平均値の定理から
+ \begin{align*}
+     |g_h(x)| = | \frac{\partial f}{\partial t}(x, t+ \theta h)| \le g(x) 
+ \end{align*}
+ となる.これにルベーグの収束定理によって,
+ \begin{equation*}
+ F'(t) = \lim_{h \to 0} \int g_h  = \int \lim_{h \to 0} g_h = \int \frac{\partial f}{\partial t}(x, t)
+ \end{equation*}
+ よって示された.
+\end{proof}
+
+
+\begin{prop}
+$\phi$は可積分関数で$\int \phi = 1$となる.$\phi_{\epsilon} = \epsilon^{-1} \phi(x / \epsilon)$ とすれば
+\begin{equation*}
+    \lim_{\epsilon \to +0} \int \phi_{\epsilon}(x -a) f(x) dx = f(a)
+\end{equation*}
+が$x =a$で連続な任意の有界関数$f$に対して成立する.
+\end{prop}
+\begin{proof}
+$|f| < M$とする.$x = a + \epsilon y $とすると,変数変換公式から
+\begin{equation*}
+    \int \phi_{\epsilon}(x -a)f(x) dx = \int \phi(y) f(a + \epsilon y) dy
+\end{equation*}
+となる.
+$f$は$x =a$で連続だから,$\lim_{\epsilon \to 0} \phi(y) f(a + \epsilon y) = \phi(y) f(a)$となる.
+もし$\phi(y)f(a + \epsilon y)$がルベーグの収束定理の仮定を満たすならば,
+\begin{equation*}
+    \lim_{\epsilon \to 0} \int \phi(y)f(a + \epsilon y ) = \int \lim_{\epsilon \to 0 } \phi(y) f(a + \epsilon y ) = \int \phi(y) f(a) dy = f(a) 
+\end{equation*}
+となる.
+また$|\phi(y) f(a + \epsilon y)|  \le  | M\phi(y)|$となるので、仮定を満たす.
+\end{proof}
+
+
+\begin{thm}[項別積分定理]
+ $f_1, f_2, \ldots$を$E$上の可積分関数列,$\sum \int |f_n| < \infty$とする
+ この時$\int \sum f_i = \sum \int f_i$となる.
+\end{thm}
+絶対値については前の項別積分定理で示した.
+さらに絶対値はルベーグの収束定理と値が絶対収束することから外せる.
+
+\subsection{積分の強絶対連続性}
+
+\begin{thm}\label{thm:strong conti}
+ $f$を$E$上可積分とする.任意の$\epsilon > 0$に対し,ある$\delta >0$が存在し,$m(F) < \delta$を満たす任意の$F \subset E$に対して,$|\int_F f | < \epsilon$となるものが存在する.
+\end{thm}
+\begin{proof}
+可積分関数$f$は単関数近似でき,実際に$|\phi| < |f|$, $| \int_E (f - \phi) < \epsilon / 2 $となる単関数$\phi$が存在する.
+$M = max|\phi(x)|$は存在する.よって,$\delta < \frac{2 \epsilon}{M}$とする.$m(F) < \delta$の場合,
+\begin{equation*}
+    \left|\int_F f \right| \le \left| \int_F \phi \right| + \left| \int (f -\phi) \right| \le \int_F M + \frac{\epsilon}{2} \le m(F)M + \epsilon / 2 < \epsilon
+\end{equation*}
+となる.
+\end{proof}
+
+
+\begin{lem}
+$f$は$[a, b]$上可積分とする.$\forall x \in [a, b]$に対し,$\int_a^x f dt = 0$であれば,ほとんど至る所$f(t) = 0$である.
+\end{lem}
+\begin{proof}
+任意の閉集合$F \subset [a, b]$に対して$\int_F f(t) = 0$を示す.それは,$(x, y) \subset [a, b]$上
+$\int_{(x, y)} f = \int_a^y f - \int_a^x f = 0$となる.任意の開集合は互いの素な開区間の和集合で表せるので,開集合$O$上でも$\int_O f dt = 0$となる.
+よって$\int_F f dt = \int_{[a, b]} - \int_O f dt = 0$となる.
+
+$E = \{x \in [a, b] \mid  f(x) > 0\}$とする.これが測度0であることを示せば良い.
+任意の$\epsilon > 0$に対し上の定理の条件を満たす$\delta$を取る.
+可測集合$E$はある閉集合$F \subset E$を用いて$m(E \setminus F) < \delta$とできる.
+これから
+$\int_E f = \int_{E \setminus F} f + \int_F f < \epsilon$とできる.
+任意の$\epsilon$に対して成り立つので,$\int_E f = 0$となる.
+$m(E) = 0$が測度ゼロ集合の定義であったが,もし$E$が測度0でなければ,$\int_E f  > 0$(単関数近似すれば明らか)となるので,$E$は測度0となる.
+\end{proof}
+
+\section{微分と積分の関係}
+
+\subsection{ビタリの被覆定理}
+\begin{screen}
+\begin{dfn}
+ $E \subset \mathbb{R}$,$\mathcal{I}$は正の長さを持つ区間の集合とする.$x \in E$に対し,$x$を含む長さがいくらでも短い$I \in \mathcal{I}$が取れる時,$\mathcal{I}$は$E$の\textbf{ビタリ被覆}という.
+\end{dfn}
+\end{screen}
+
+\begin{thm}[ビタリの被覆定理]
+$E \subset \mathbb{R}$を外測度が有限な集合,$\mathcal{I}$を$E$のビタリ被覆とする.
+この時,$m^{*}(E \setminus \cup_{j=1}^{\infty} I_j) =0$を満たす互いに素な区間の列$I_1, \ldots \in \mathcal{I}$が存在する.
+この時,特に$m^*(E \setminus \cup_{j=1}^N I_j) < \epsilon$を満たす互いに素な有限個の区間$I_1, \ldots, I_N \in \mathcal{I}$が存在する.
+\end{thm}
+\begin{proof}
+測度が有限な開集合$E \subset O$を任意にとり,$\tilde{\mathcal{I}} =\{\overline{I} \mid I \in \mathcal{I}, \overline{I} \subset O\}$とする.
+任意の$x \in E$に対して$x \in I \subset O$となるいくらでも小さく$I \in \mathcal{I}$が存在するので,$\tilde{\mathcal{I}}$もビタリ被覆になる.よってこれに対して示せばよい.
+この時,以下のように$I_1, I_2, \ldots$を選ぶ
+\begin{enumerate}
+    \item $I_1 \in \tilde{I}$は任意に取る.
+    \item $I_1, \ldots, I_n$が互いに素の時,もし$\cup I_i \supset E$ならそこで打ち切る.そうでなければ,ある$x \in E \setminus \cup_{j=1}^{n} I_j$が存在し,
+    $\cup I_j$は閉集合なので,$x$を含む$I \in \tilde{I}$で$\cup_{j=1}^n I_j$と交わらないものが取れる.
+    具体的には$I_j$が閉集合であることから$d(x, I_j) > 0$であり,$\min d(x, I_j) = a$とすると$d(x, I_{n+1}) < a / 2$となるもをとればよい.(これはビタリ被覆の定義から存在する)
+    ここでは,さらに
+    $k_n:= \mathrm{sup} \{|I| \mid  I \in \tilde{I}, I \cap  (\cup I_j) = \emptyset\}$とすると,$k_n > 0$となる.
+    そこで,$I_{n+1}$を,
+    \begin{equation*}
+        I_{n+1} \cap (\cup I_j) = \emptyset; k_n/2 \le |I_{n+1}| \le k_n
+    \end{equation*}
+    となるように取る.
+\end{enumerate}
+このように取り有限回で終了した場合は自明.
+終了しなかった場合を考える.
+$\sum_{j=1}^{\infty} I_j \le m(O)$となる.
+よって十分に大きい$N$を取れば,$\sum_{j=N+1}^{\infty}|I_j| < \epsilon / 5$となる.
+この時
+\begin{equation*}
+    R := E \setminus \cup_{j=1}^N I_j \subset \cup_{j=N+1}^{\infty} 5I_j
+\end{equation*}
+を示せばよい.
+なぜなら,$m(E \setminus \cup_{j=1}^N I_j) \le \cup_{j=N+1}^{\infty} 5|I_j| < \epsilon$となるからである.
+
+$x \in R$を取る.$x \in I, I \in \tilde{I}$で, $I \cap \cup_{j=1}^N I_j = \emptyset$が取れる.
+ただし、$I$は$I_{N+1}, \ldots$とは交わる.そうでなければ,任意の$n$に対して$I \cap (\cup I_j) = \emptyset$となる.したがって,$k_n$の定義から
+$|I| \le k_n$となるが,$k_n \to 0$なので,$|I| = 0$となり矛盾する.
+$N_0$を$I_j$が初めて$I$と交わる番号とする.
+この時,$|I| \le k_{N_0 -1}$であり,$k_{N_0-1}/ 2 \le |I_{N_0}|$となる.
+よって$|I|/ 2 \le |I_{N_0}|$となる.$I$と$I_{N_0}$は交わるので,
+$I \subset 5I_{N_0}$となる.ゆえに$x \in 5I_{N_0}$となり,言えた.
+
+\end{proof}
+\subsection{単調増加関数の微分}
+
+\begin{thm}
+ 区間$[a,b]$上の単調増加関数$f$はほとんど至るところ微分可能で、 導関数$f'$は可積分である.不等式
+ \begin{equation*}
+  \int_{\alpha}^{\beta} f'(x)dx \le f(\beta) - f(\alpha)
+ \end{equation*}
+\end{thm}
+が任意の$a \le \alpha \le \beta \le b$で成り立つ.
+
+\begin{proof}
+まず,$\int f'$が定義できることを示す.
+$f$が全ての微分可能とは限らないため,$f'$は存在するとは限らない.
+ただし,$f'$が定義できない点全体の集合が測度0であれば,そこをどんな値で補完しても,$\int f'$は一致する.
+そのため$f$がほとんど至る所微分可能であることを示す.
+$x \le a$なら$f(x) = f(a)$,$x \ge b$なら$f(x) = f(b)$として$f$を$\mathbb{R}$上で定義する.
+
+\begin{align*}
+    D^{\pm}f(x) = \overline{\lim_{h \to 0}}\frac{f(x \pm h) - f(x)}{\pm h}, D_{\pm}(x) = \underline{\lim}_{h \to 0} \frac{f(x \pm h)  - f(x)}{\pm h}
+\end{align*}
+となる.また定義から$D_+f(x) \le D^+f(x), D_-f(x) \le D^-f(x)$となるので,
+\begin{align*}
+    f'(x) = \lim_{h \to 0}\frac{f(x+h) - f(x)}{h} 
+\end{align*}
+が存在することは,$D^+f(x) \le D_-f(x), D^-f(x) \le D_+f(x)$が言えることと同値.
+つまり今回は$E^{\pm} := \{ x \in [a, b] \mid D^{\pm}f(x) > D_{\mp} f(x) \}$が測度0であることを言えば良い.
+$E_{u,v} := \{x \in [a,b] \mid  D^+f(x) > u> v > D_-f(x)\}$とすると,
+$E^+ = \cup_{u, v \in \mathbb{Q} }E_{u, v}$となる.
+$\mathbb{Q}$は可算なので,$E_{u, v}$が測度0であることを示せば良い.
+$s = m^*(E_{u, v})$とする.
+$O \supset E_{u,v}$を$m(O) < s + \epsilon$となるようにとる.
+(本当に取れるのかTBD.これが取れるなら,$E_{uv}$はルベーグ可測集合になるような...)
+$v > D_-f(x)$より,$f(x) = f(x -h) < hv$となるいくらでも小さい$h$が存在する.
+よって
+\begin{equation*}
+    \mathcal{I} := \{[x-h, x] \mid x \in E_{u,v} , h >0 , [x -h, x] \subset O, f(x) - f(x-h) < hv\}
+\end{equation*}
+とするとこれは$E_{u, v}$のビタリ被覆である.ビタリの被覆定理から,
+$\mathcal{I}$上の互いに素な区間列$\tilde{I}_1 = [x_1-h_1, x_1], ...$を$m(E \setminus \cup \tilde{I}_j) = 0$となるように取れる.
+\begin{equation*}
+    \sum f(x_j) - f(x_j - h_j) \le \sum v h_j \le v m(O) < v(s + \epsilon)
+\end{equation*}
+が成り立つ.$I_i:= (x_i-h_1, x_i)$とする.この時, $m(E_{u,v} \setminus \cup I_j) = 0$となる.
+
+$A = E_{u,v} \cap \cup I_j$とする$m^*(A) = m^*(E_{u,v}) =s$である.$y \in A$なら,$D^+f(y) > u$だから,
+$f(y+k)  - f(y) > ku$となるいくらでも小さい$k > 0$が存在する.$y \in A$はいずれかの開区間$I_j$に含まれ,$k$を十分に小さくとることにより,
+$[y, y+k] \subset I_j$となる.よって
+\begin{equation*}
+    \mathcal{J} := \{ [y, y+k] \mid y \in A, k> 0, \exists j, [y, y+k] \subset I_j, f(y+k) -f(y) > ku\}
+\end{equation*}
+は$A$のビタリ被覆になる.前と同じ議論により,
+$J_i= [y_1, y_1 +k_1] ...$をうまくとると,$m^*(A \setminus \cup J_i) = 0$となる.よって$m^*(A \cap (\cup J_i) = m^*(A) = s$となる.
+また
+
+\begin{equation*}
+\sum (f(y_i + k_i)  - f(y_i) \ge  \sum k_i u \ge um^*(A \cap (\cup_{i=1}^{\infty} J_i) = us
+\end{equation*}
+となる.
+これらから$f$の単調増加性に注意すると
+($[y_i, y_i+k_i], [y_j, y_j + k_j] \subset [x_k -h_k, x_k]$となることにも注意)
+\begin{equation*}
+us \le \sum f(y_i + k_i) - f(y_i) ) \le \sum f(x_j) - f(x_j - h_j))  \le v(s + \epsilon)
+\end{equation*}
+$u > v$なので,$s=0$以外ありえない.
+となる.これで積分が定義できることがわかった.
+後は頑張って計算するぞ
+\end{proof}
+
+\subsection{有界変動関数}
+\begin{dfn}
+ $[a,b]$の分割$\Delta: a=x_0 < x_1 < \ldots < x_n=b$に対して,
+正方向の変動量の和を$P_{\Delta}[a, b] = \sum (f(x_j) - f(x_{j-1}))^+$,負方向の変動量の和の絶対値を$N_{\Delta}[a, b]= \sum (f(x_j) - f(x_{j-1}))^-$,振動量の和$T_{\Delta}[a,b] = P_{\Delta}[a,b] + N_{\Delta}[a, b]$とする.
+$P[a,b]: = \sup P_{\Delta}[a, b], N[a,b] := \sup N_{\Delta}[a, b], T[a, b]:= \sup T_{\Delta}[a,b]$とする.$T[a, b] < \infty$の時,$f$は$[a, b]$上\textbf{有界変動}という.
+\end{dfn}
+
+\begin{lem}
+\begin{enumerate}
+    \item $f,g$を$[a,b]$上有界変動とすると$\alpha f+ \beta g$も有界変動である.
+    \item 単調関数$f$は有界変動であり,単調増加なら,$f(x) - f(a) = P[a, x],$ 
+    \item 単調増加関数の差として表される関数は有界変動である.
+\end{enumerate}
+\end{lem}
+\begin{proof}
+\begin{enumerate}
+\item $h = \alpha f + \beta g$とする. $T_{\Delta}^{h} = \alpha T_{\Delta}^f + \beta T_{\Delta}^g$となる.
+よって$\Delta$のとり方によらず
+$T_{\Delta}^{h} \le |\alpha| T^f + |\beta| T^g $となる.よって$T^h\le |\alpha| T^f + |\beta| T^g $となるので、有界変動である.
+
+\item $f$が単調増加の場合だけ示す.$P_{\Delta} = f(b) - f(a)$となる.また,$N_{\Delta} = 0$となる.これは$\Delta$のとり方によらないので,$T= f(b) - f(a)$となり有界変動である.
+また,$f(x) - f(a) = P[a,x]$となる.
+\item 単調増加関数$f,g$は有界変動であり,$f-g$は有界変動になるので,言えた.
+\end{enumerate}
+\end{proof}
+
+\begin{lem}
+$f$が$[a, b]$上有界変動なら次が成立する.
+\begin{enumerate}
+    \item  $T[\alpha, \beta] = P[\alpha, \beta] + N[\alpha, \beta]$(これは有界変動でなくても成り立つ)
+    \item $f(b) - f(a) = P[a, b] - N[a,b]$
+    \item 任意の$a < c < b$に対して,$P[a, b]= P[a, c] + P[c,b]$となる.
+\end{enumerate}
+\begin{proof}
+$P_{\Delta}[a, b] - N_{\Delta}[a, b] = \sum (f(x_j) - f(x_{j-1})) = f(b) - f(a)$となる.
+つまり,$P_{\Delta}[a, b] = f(b) - f(a) + N_{\Delta}[a, b]$となるので,supを取ると.
+$P[a,b] = f(b) - f(a)  + N[a, b]$となる.よって
+$T[a,b]= f(b) - f(a) + 2\sup  N_{\Delta}[a, b] = f(b) - f(a) + 2 N[a, b] =  P[a, b] + N[a, b]$となる.
+
+$\Delta_1, \Delta_2$をそれぞれ,$[a,c], [c,b]$の分割とする.
+
+$P_{\Delta_1} + P_{\Delta_2} = P_{\Delta_1 \cup \Delta_2} \le P[a, b]$となる.よって,$P[a, c] + P[c, b] \le P[a, b]$となる.
+逆に$\Delta$を$[a, b]$の分割とする.$\Delta$に$c$を加えたもののうち,$[a, c]$の分割を$\Delta_1$,$[c,b]$の分割を$\Delta_2$とする.
+$x_j, x_{j-1} \in \Delta$で$x_{j-1} \ge c <  x_j$とする.
+\begin{align*}
+\left(f(x_j) - f(x_{j-1})\right)^+ &= (f(x_j) - f(c) + f(c) - f(x_{j-1}))^+ \\
+       &\le (f(x_j) - f(c))^+ + (f(c) - f(x_{j-1})^+
+\end{align*}
+よって,$P_{\Delta}[a, b]  \le P_{\Delta_1}[a, c] + P_{\Delta_2}[c, b]$となる.
+これから$P[a, b] \le P[a, c] + P[c, b]$となる.よって
+$P[a, b] = P[a, c] + P[c, b]$となる.
+\end{proof}
+\end{lem}
+
+\begin{thm}
+$[a, b]$上の関数$f$が有界変動であることは単調増加関数$f_1,f_2$を用い,$f = f_1 - f_2$と表されることが必要十分である.
+\end{thm}
+\begin{proof}
+有界変動関数$f$に対し,
+$f(x) - f(a) = P[a, x] - N[a, x]$
+と表され,右辺に出てくる$P[a,x], N[a,x]$は単調増加なので、言えた.
+\end{proof}
+これから,有界変動関数はほとんどいたる所微分可能であり,$f'(x) = P'[a,x] - N'[a, x]$は可積分である.
+
+\subsection{積分の微分}
+\begin{thm}
+$f$は$[a, b]$上の可積分関数とする.$F(x) = \int_a^x f(t)dt$は連続かつほとんど至る所微分可能で、$F'(x) = f(x) a.e$が成立する.
+
+\end{thm}
+
+
+\begin{proof}
+$F(x)$が連続であることを示したい.それは定義から任意の$\epsilon$に対しある$\delta > 0$が存在し、$|x - x'| < \delta $に対し$|F(x) - F(x') | < \epsilon$となることを示す.
+$|F(x) - F(x')| = |\int_{x'}^x f(t)dt|$なので、\ref{thm:strong conti}より連続であることがわかる.
+次に$F$が有界変動関数であることを示す。有界変動であれば、ほとんど至る所微分可能である。
+
+$[a, b]$の任意の分割$\Delta$に対し,
+
+\begin{equation*}
+\sum |F(x_j) - F(x_{j-1})| \le \sum \int_{x_{j-1}}^{x_j} |f(t)| dt = \int_a^b |f(t)| dt < \infty
+\end{equation*}
+となる.よって有界変動であることもわかる.
+$F'(x) = f(x) a.e$を示す.
+
+\begin{itemize}
+    \item $f$が有界、,$|f(x) | < M$とする.
+    $g_n(x) =  n (F(x+ \frac{1}{n}) - F(x)) = n \int_x^{x + 1/n} f(t) dt$とする.
+    $\lim_{n \to \infty} g_n(x) = F'(x)$となる、また$|g_n(x)| \le n \int_x^{x + 1/n} M =  M$となる.
+    定数関数$M$は可積分なので、ルベーグの収束定理によって,
+    
+    \begin{equation*}
+        \int_a^x F'(t) dt = \lim_{n \to \infty}\int_a^x g_n(t) dt
+    \end{equation*}
+   となる.
+   $\int_a^x g_n(t) dt = n\int_a^x  F(t+ 1/n) - F(t) dt = n \int_{a + 1/n}^{x+1/n}F(t) dt - \int_a^x F(t)dt = n (\int_x^{x+ 1/n} - \int^{a+1/n}_a) F(t) dt$
+   となる.よって,
+   \begin{equation*}
+       \lim_{n \to \infty} n (\int_x^{x+ 1/n} - \int^{a+1/n}_a) F(t) dt = F(x)  - F(a) = \int_a^x f(t) dt
+   \end{equation*}
+   となる.よって$\int_a^x F'(t)dt - f(t) dt= 0$となる.
+   これからほとんど至る所$F'(t) = f(t)$となる.
+   \item 一般の場合
+   $f$は有界変動なので、$f = f^+ - f^-$と分解して,示す.なので、$f$が単調増加のときに示せれば良い.$f$が単調増加なら$F$は単調増加なので、
+   単調増加関数に関するルベーグの定理から$\int_a^x F'(t) dt \le F(x) - F(a)$となる.
+   逆向きを示す.
+  \begin{equation*}
+   f_n(x) := \begin{cases} f(x) ,   & f(x) < n \\ n  & f(x) \ge n \end{cases}
+  \end{equation*} 
+  とする.$G_n(x) := \int^x_a (f(t) - f_n(t)) dt$
+  $F(x) = G_n(x) + \int_a^x f_n(t) dt$.$f_n$は有界だから前の結果より$\int f_n dt ' = f(x)$で$G_n(x)$は単調増加になるので、
+  $G'_n(x) \ge 0$となる.
+  よって
+  \begin{equation*}
+      F'(x) = G'_n(x) + f_n(x)  \ge f_n(x) a.e
+  \end{equation*}
+  となる.
+  $\lim_{n\to \infty} f_n(x) = f(x)$より,$F'(x) \ge f(x) $となる.
+  よって、この式を積分することによって逆向きが言えた.
+\end{itemize}
+\end{proof}
+
+
+\subsection{絶対連続性}
+
+\begin{dfn}
+微分がほとんど至る所０に等しい有界変動関数を\textbf{特異関数}という.
+連続な特異関数を\textbf{特異連続関数}という.
+\end{dfn}
+
+$f$が有界変動な時$g(x) = f(x) - \int_a^xf'(t) dt$は上の定理から$g'(x) = 0$ .a.e .$x$を満たすので,$g(x)$は特異関数である.
+この章では可積分関数の積分として表される関数を特徴づける.
+
+
+\begin{dfn}
+区間$[a, b]$上の関数$f$は任意の$\epsilon > 0$に対して,ある$\delta > 0$が存在し,有限個の互いに素な区間$[x_1, y_1] , \ldots ,[x_n, y_n]$が
+$\sum_{j=1}^n | x_j - y_j| < \delta$を満たすときは常に$\sum_{j=1}^n | f(x_j) - f(y_j)| < \epsilon$となる時
+$[a,b]$上絶対連続という.
+\end{dfn}
+
+\begin{epl}
+\begin{enumerate}
+    \item  $x \sin(1/ \sqrt{x})$は$[0, 1]$上絶対連続であるが,$x \sin(1/ x)$は$[0, 1]$上絶対連続でない
+    \item ある$L$が存在して,任意の$x, y$に対して$|f(x) - f(y) | \le L |x-y|$となる時リプシッツ連続という.
+    リプシッツ連続なら絶対連続である.
+\end{enumerate}
+\end{epl}
+2のみ示す.
+$\delta = \epsilon / L$と取ると$\sum |x_j - y_j| < \delta$の時
+$\sum |f(x_j) - f(y_j) | =  \sum L |x_j -y_j < \epsilon$となるので,言えた.
+
+今$f$を$[a, b]$上可積分とする.
+\begin{equation*}
+    F(x) = F(a) + \int_a^x f(t) dt
+\end{equation*}
+とするとこれは$[a, b]$上絶対連続である.
+それは\ref{thm:strong conti}より言える.
+逆に絶対連続仮数は可積分関数の積分として表されることを示す.
+
+\begin{lem}
+絶対連続なら有界変動であり,したがってほとんど至る所微分可能
+\end{lem}
+\begin{proof}
+$\epsilon =1$に対し,絶対連続性が成り立つ$\delta$を取る.
+幅$|\Delta_0| < \delta$の分割$\Delta_0: a=y_0 < y_1 < \ldots < y_N=b$を取る.
+この時$\Delta_0$の任意の細分$\Delta_1$に対して$[y_{j-1}, y_j]$に含まれる$[x_{k-1}, x_k]$ をまとめて
+\begin{equation*}
+T_{\Delta_1}[a, b] = \sum_{j=1}^N \sum_{[x_{k-1}, x_{k}] \subset [y_{j-1}, y_{j}]}| f(x_k) - f(x_{k-1})|
+\end{equation*}
+と書くとこれは$N$以下となる.
+ゆえにこのように細分との共通部分を取れば常に$N$以下となることがわかるので$f$は有界変動である.
+\end{proof}
+
+\begin{lem}
+$f$が区間$[a,b]$上絶対連続で$f'(x) =0$a.eなら$f$は定数である.
+\end{lem}
+\begin{proof}
+$E = \{ x \in (a,b) \mid f'(x) = 0 \}$とする.$m([a,b] \setminus E) = 0$となる.
+任意に$\epsilon > 0$を取る.$\delta$を絶対連続の式が成り立つように取る.
+$x \in E$なら$[x, x+h] \subset (a, b)$で$|f(x + k) - f(x)| < k \epsilon, 0 < \forall k < h$となるいくらでも小さい$h > 0$が存在する.
+したがってこのような区間を全て集めた
+
+\begin{equation*}
+I = \{ [x, x +h] \subset (a,b) : x \in E, h> 0, |f(x+k) - f(x) | < k\epsilon, 0 < \forall k < h \}    
+\end{equation*}
+は$E$のビタリ被覆である.
+被覆定理から
+互いに素な有限個の区間$I_j = [x_j, x_j+ h_j]$を$m([a,b] \setminus \cup I_j) = m(E \setminus \cup I_j) < \delta $と取る.
+$[a, b] \setminus \cup I_j$は互いに素な有限個の区間の和集合でその長さの和は$\delta$未満になる.
+したがって$f$のその上の振動量の和$\sum |f(x_{j+1}) - f(x_j + h_j)|$は$\epsilon$以下である.
+一方で$I_1, \ldots I_N$のとり方から,$f$の$\cup I_j$上の振動量の和は$\sum_{j=1}^N h_j  \epsilon \le (b-a) \epsilon$.となる.
+これらを加えることで
+$|f(b) - f(a) |  \le \epsilon + \epsilon |b-a|$となる.
+$\epsilon$は任意だから$f(b) - f(a) =0$である.
+今は$a,b$で示したが、$a,b$をとりかえることで,$f$は定数であることがわかる.
+\end{proof}
+
+
